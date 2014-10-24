@@ -25,7 +25,7 @@ import java.awt.event.ActionEvent;
 import sun.audio.*;
 
 import java.io.*;
-
+//hello my friend
 public class IntroCheckers extends JPanel implements ActionListener {
 	private JTextField textName;
 	private AudioPlayer bjMusic;
