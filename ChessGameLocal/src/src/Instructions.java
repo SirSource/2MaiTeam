@@ -31,7 +31,7 @@ public class Instructions extends JPanel {
 		JTextPane textpaneInstructions = new JTextPane();
 	
 		textpaneInstructions.setBounds(210, 60, 690, 550);
-		textpaneInstructions.setBackground(new Color( 0,0,0,1000));
+		textpaneInstructions.setBackground(new Color( 0,0,0,0));
 		textpaneInstructions.setFont(new Font("Lucida Blackletter", Font.PLAIN, 15));
 		textpaneInstructions.setText("                                                                            Rules \n\n"
 				+ "Checkers is played by two players. Each player begins the game with 12 colored pieces.\n"
