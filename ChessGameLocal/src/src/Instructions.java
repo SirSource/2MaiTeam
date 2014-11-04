@@ -37,7 +37,7 @@ public class Instructions extends JPanel {
 				+ "Checkers is played by two players. Each player begins the game with 12 colored pieces.\n"
 				+ "The board consists of 64 squares, alternating between 32 dark and 32 light squares.\n"
 				+ "Each player places his or her pieces on the 12 dark squares closest to him or her.\n"
-				+ "Black moves first. Players then alternate moves.\n"
+				+ "Red moves first. Players then alternate moves.\n"
 				+ "Moves are allowed only on the dark squares, so pieces always move diagonally. Simple pieces are always limited to forward moves (toward the opponent).\n"
 				+ "A piece making a non-capturing move (not involving a jump) may move only one square.\n"
 				+ "A piece making a capturing move (a jump) leaps over one of the opponent's pieces, landing in a straight diagonal line on the other side."

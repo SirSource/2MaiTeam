@@ -32,10 +32,10 @@ public class CheckersBoard extends JPanel implements MouseListener {
 
 	
 	
-	Icon iconchess = new ImageIcon(getClass().getResource("iconchess.png")); 
+	private Icon iconchess = new ImageIcon(getClass().getResource("iconchess.png")); 
 
 	//instance variables 
-
+    private boolean myturn= false;
 	
 	private int minutesfirstplayer= 15, secondsfirstplayer=1, minutesecondplayer=15, secondssecondplayer=1; //seconds has to start en 1 segundo 
 	private int squarex1, squarex2, squarey1,squarey2;
@@ -55,30 +55,50 @@ public class CheckersBoard extends JPanel implements MouseListener {
 	
 	private JLayeredPane layeredPanecheckerBoard = new JLayeredPane(); // [ane that contains the the checkerboard and pieces
 	private AudioPlayer bjMusic;
-
 	
 	//Icons 
-	private Icon redpiecesicon = new ImageIcon(getClass().getResource("redpiece3.png"));
-	private Icon blackpiecesicon = new ImageIcon(getClass().getResource("blackpieces2.png"));
+	
+// button for the music button
 	private Icon musiconicon = new ImageIcon(getClass().getResource("sound.png"));
 	private Icon musicofficon = new ImageIcon(getClass().getResource("speaker.png"));
 	
-	private Icon blackselected = new ImageIcon(getClass().getResource("blackselected.png"));
-	private Icon redselected = new ImageIcon(getClass().getResource("redselected.png"));
+
+	// the icons used for the labels
+	private ImageIcon redpiecesicon = new ImageIcon(getClass().getResource("redpiece3.png"));
+	private ImageIcon blackpiecesicon = new ImageIcon(getClass().getResource("blackpieces2.png"));
+	private ImageIcon blackselected = new ImageIcon(getClass().getResource("blackselected.png"));
+	private ImageIcon redselected = new ImageIcon(getClass().getResource("redselected.png"));
+	
+	//icon to store the images 
+	private ImageIcon redpiecescircle = new ImageIcon(getClass().getResource("redpiece3.png"));
+	private ImageIcon blackpiecescircle = new ImageIcon(getClass().getResource("blackpieces2.png"));
+	private ImageIcon blackcircleselected = new ImageIcon(getClass().getResource("blackselected.png"));
+	private ImageIcon redcircleselected = new ImageIcon(getClass().getResource("redselected.png"));
+	
+	private ImageIcon redpiecesstars = new ImageIcon(getClass().getResource("star_red_piece.png"));
+	private ImageIcon blackpiecesstars = new ImageIcon(getClass().getResource("star_black_piece.png"));
+	private ImageIcon redstarselect = new ImageIcon(getClass().getResource("star_red_selected.png"));
+	private ImageIcon blackstarselect = new ImageIcon(getClass().getResource("star_black_selected.png"));
+	
+	private ImageIcon redpiecesmachinery = new ImageIcon(getClass().getResource("red_machinery_piece.png"));
+	private ImageIcon blackpiecesmachinery = new ImageIcon(getClass().getResource("black_machinery_piece.png"));
+	private ImageIcon redmachineryselect = new ImageIcon(getClass().getResource("red_machinery_select.png"));
+	private ImageIcon blackmachineryselect = new ImageIcon(getClass().getResource("black_machinery_select.png"));
+
 	
 	//Instance variable for the chekers board
-	CheckersData checkerBoard = new CheckersData();
-	
+	private CheckersData checkerBoard = new CheckersData();
 	private JButton btnMusic = new JButton(musicofficon);
 	
 
 	/**
 	 * Create the panel.
 	 */
+// 	 @param number of the player 
 	public CheckersBoard() {
 	
 		bjMusic =  new AudioPlayer ("Ocarina song of time.mp3");
-		bjMusic.play();
+// if player is an even # then myturn variable is true other wise is false
 		
 	
 
@@ -110,14 +130,14 @@ public class CheckersBoard extends JPanel implements MouseListener {
 		labelcheckerboard.setBounds(0, 0, checkersboardicon.getIconWidth(), checkersboardicon.getIconHeight());
 		layeredPanecheckerBoard.add(labelcheckerboard);
 		layeredPanecheckerBoard.addMouseListener(this);
-
-		//for loop to create the black checker pieces
+		
+	//esto es para inicializar los pieces. 
+		
 		int a=0, b=0;
 		for (int j=0; j<12;j++){
 
 			blackpieces[j] = new JLabel();
 			blackpieces[j].setIcon(blackpiecesicon);  
-
 			blackpieces[j].setBounds(getxPixels(b), getyPixels(a), blackpiecesicon.getIconWidth(), blackpiecesicon.getIconHeight());
 
 			layeredPanecheckerBoard.add(blackpieces[j], new Integer(300));
@@ -133,14 +153,12 @@ public class CheckersBoard extends JPanel implements MouseListener {
 			}
 		}
 
-		//for loop to create the red checker pieces
-		a=1;  //si es necesario comenzar en 1 
+		a=1;  //si es necesario comenzar en 1 o
 		b=5;
 		for (int j=0; j<12;j++){
 
 			redpieces[j] = new JLabel();
 			redpieces[j].setIcon(redpiecesicon);  
-
 			redpieces[j].setBounds(getxPixels(b), getyPixels(a), redpiecesicon.getIconWidth(), redpiecesicon.getIconHeight());
 			layeredPanecheckerBoard.add(redpieces[j], new Integer(300));
 			a=a+2;
@@ -238,6 +256,65 @@ public class CheckersBoard extends JPanel implements MouseListener {
 
 
 
+	}
+	
+	
+	
+	public void setShape(String shape){
+		
+	
+		
+		if (shape == "Stars"){
+		
+
+				blackpiecesicon.setImage(blackpiecesstars.getImage());
+				redpiecesicon.setImage(redpiecesstars.getImage());
+				blackselected.setImage(blackstarselect.getImage());
+               redselected.setImage(redstarselect.getImage());
+
+		}
+		else if (shape == "Circles"){
+			
+			redpiecesicon.setImage(redpiecescircle.getImage());
+			blackpiecesicon.setImage(blackpiecescircle.getImage());
+			blackselected.setImage(blackcircleselected.getImage());
+           redselected.setImage(redcircleselected.getImage());
+
+		}
+		else if (shape == "Machinery Pieces"){
+			
+			redpiecesicon.setImage(redpiecesmachinery.getImage());
+			blackpiecesicon.setImage(blackpiecesmachinery.getImage());
+			blackselected.setImage(blackmachineryselect.getImage());
+           redselected.setImage(redmachineryselect.getImage());
+		}
+		
+	}
+	
+	
+	public void moveGUI(int squarey1, int squarex1, int squarey2, int squarex2 ){
+
+		int i=0;
+		if (redturn){
+			
+			i= getRedPiece(squarex1,squarey1);
+	        redpieces[i].setBounds(getxPixels(squarex2), getyPixels(squarey2), redpiecesicon.getIconWidth(), redpiecesicon.getIconHeight());
+	        redpieces[i].setIcon(redpiecesicon);
+	    	redturn=false;
+	    	time2.start(); 
+			time.stop();
+		}
+		else { 
+	    i=0;
+		i= getBlackPiece(squarex1,squarey1);
+		blackpieces[i].setIcon(blackpiecesicon);
+		blackpieces[i].setBounds( getxPixels(squarex2), getyPixels(squarey2), blackpiecesicon.getIconWidth(),blackpiecesicon.getIconHeight());
+		redturn=true;
+		time2.stop();
+		time.start();
+		}
+		
+        myturn = true;
 	}
 	
 	public int getBlackPiece(int col,int row){
@@ -387,10 +464,8 @@ public class CheckersBoard extends JPanel implements MouseListener {
 			int squarex= getxSquare(col2);    /// this will be the variables that will be checked to verify of there is something or if the move is valid
 //			System.out.println(squarex+"-"+ squarey);
 			// x = colums y= rows
-			if (firstclick){
-//				int pixelx = getxPixels(squarex);
-//				int pixely = getyPixels(squarey);
-				
+			if (firstclick && myturn){
+
 			if (checkerBoard.thereIs(squarey, squarex)==1 && redturn== false){
 				squarex1= squarex;
 				squarey1= squarey;
@@ -416,36 +491,30 @@ public class CheckersBoard extends JPanel implements MouseListener {
 			}
 //
 			}//end of first click
+			
 			else if (firstclick == false){   //this is the second click
-				// el legal move automaticamente verifica que este vacio el el lugar del segundo click
+			
 				if (checkerBoard.legalMove(squarey1, squarey, squarex1, squarex))
 				{
 					squarex2= squarex;
 					squarey2 = squarey;
 				
 					if (checkerBoard.thereIs(squarey1, squarex1)==1){
-						int i=0;
-						i= getBlackPiece(squarex1,squarey1);
-						
+
+				moveGUI(squarey1, squarex1, squarey2, squarex2);
 				
-				blackpieces[i].setBounds(getxPixels(squarex2), getyPixels(squarey2), blackpiecesicon.getIconWidth(),blackpiecesicon.getIconHeight());
-				blackpieces[i].setIcon(blackpiecesicon);
-				time2.stop();
-				time.start();
-				redturn=true;
+				//redturn=true;
 					}  
 					
 					else if (checkerBoard.thereIs(squarey1, squarex1)==3){
-						int i=0;
-						i= getRedPiece(squarex1,squarey1);
-				redpieces[i].setBounds(getxPixels(squarex2), getyPixels(squarey2), redpiecesicon.getIconWidth(), redpiecesicon.getIconHeight());
-				redpieces[i].setIcon(redpiecesicon);
-				time2.start(); 
-				time.stop();	
-				redturn=false;
+
+				moveGUI(squarey1, squarex1, squarey2, squarex2);
+
+				
 					}
 					
 					checkerBoard.moveTo(squarey1, squarex1, squarey2, squarex2);
+					myturn = false;
 					firstclick = true;
 					
 					
@@ -474,8 +543,8 @@ public class CheckersBoard extends JPanel implements MouseListener {
 					redpieces[i].setIcon(redselected);
 				}
 				
-				//este es el if que vamos a usar para comer
 				
+				//este es el if que vamos a usar para comer
 				
 				else if (checkerBoard.canJump(squarey1, squarex1, squarey, squarex)){
 					
@@ -484,57 +553,49 @@ public class CheckersBoard extends JPanel implements MouseListener {
 				squarey2 = squarey;
 
 				if (checkerBoard.thereIs(squarey1, squarex1)==1){
-					int i=0;
-					i= getBlackPiece(squarex1,squarey1);
-					
-				
-			blackpieces[i].setBounds(getxPixels(squarex2), getyPixels(squarey2), blackpiecesicon.getIconWidth(),blackpiecesicon.getIconHeight());
-			blackpieces[i].setIcon(blackpiecesicon);
-			
-
-			int j =0;
-			 j = getRedPiece(CheckersData.midcol,CheckersData.midrow);
-			 layeredPanecheckerBoard.remove(redpieces[j]);
-			  
+				moveGUI(squarey1, squarex1, squarey2, squarex2);
+				//removing from the GUI 
+			     int j =0;
+			    j = getRedPiece(CheckersData.midcol,CheckersData.midrow);
+			    redpieces[j].setBounds(0, 0, 0, 0);
+			    layeredPanecheckerBoard.remove(redpieces[j]);
+			    //removing from the array
 			 checkerBoard.remove(CheckersData.midrow, CheckersData.midcol);
-		
+	
 			 scorePlayer2++;
-			 
-			
 			 labelScorePlayer2.setText("Score:" + scorePlayer2);
-			time2.stop();
-			time.start();
-			redturn=true;
+//			
 				}  
 				
 				else if (checkerBoard.thereIs(squarey1, squarex1)==3){
-					int i=0;
-					i= getRedPiece(squarex1,squarey1);
-			redpieces[i].setBounds(getxPixels(squarex2), getyPixels(squarey2), redpiecesicon.getIconWidth(), redpiecesicon.getIconHeight());
-			redpieces[i].setIcon(redpiecesicon);
-			
+
+			moveGUI(squarey1, squarex1, squarey2, squarex2);
+			//removing from the GUI 
 			int j =0;
 			 j = getBlackPiece(CheckersData.midcol,CheckersData.midrow);
+			 blackpieces[j].setBounds(0, 0, 0, 0);
 			 layeredPanecheckerBoard.remove(blackpieces[j]);
+			 
+			  //removing from the array
 			 checkerBoard.remove(CheckersData.midrow, CheckersData.midcol);
 			 scorePlayer1++;
 			 labelScorePlayer1.setText("Score:" + scorePlayer1);
-			time2.start(); 
-			time.stop();	
-			redturn=false;
+				
+		
 				}
 				
 				checkerBoard.moveTo(squarey1, squarex1, squarey2, squarex2);
 				firstclick = true;
+				myturn = false;
 				
 				}    //end of jump 
 			
 			}  // end of second click 
 		
-		//	System.out.println(squarex+"-"+ squarey+"-"+col2+"-"+row2);   
+	  
 		}
 		else {
-             // Do not do anything because game is not running
+             // Do not do anything because game is not running or is not your turn
 		}
 	}
 

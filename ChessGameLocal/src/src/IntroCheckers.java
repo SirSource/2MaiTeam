@@ -25,14 +25,15 @@ import java.awt.event.ActionEvent;
 import sun.audio.*;
 
 import java.io.*;
+import javax.swing.JComboBox;
 //hello my friend
 public class IntroCheckers extends JPanel implements ActionListener {
 	private JTextField textName;
 	private AudioPlayer bjMusic;
-	Icon musiconicon = new ImageIcon(getClass().getResource("sound.png"));
-	Icon musicofficon = new ImageIcon(getClass().getResource("speaker.png"));
-	JButton btnMusic = new JButton(musicofficon);
-
+	private Icon musiconicon = new ImageIcon(getClass().getResource("sound.png"));
+	private Icon musicofficon = new ImageIcon(getClass().getResource("speaker.png"));
+	private JButton btnMusic = new JButton(musicofficon);
+private CheckersBoard checkerboard = new CheckersBoard();
 
 	/**
 	 * Create the panel.
@@ -63,6 +64,33 @@ public class IntroCheckers extends JPanel implements ActionListener {
 		JLabel checkersiconlabel = new JLabel(iconchess);
 		checkersiconlabel.setBounds(191, 49, iconchess.getIconWidth(), iconchess.getIconHeight());
 		layeredPane.add(checkersiconlabel, new Integer(300));
+		
+		
+		String[] shapes= {"Circles", "Stars", "Machinery Pieces"};
+		JComboBox shapecomboBox = new JComboBox(shapes);
+		
+		shapecomboBox.setBounds(199, 176, 134, 27);
+		shapecomboBox.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				JComboBox shapeselect  = (JComboBox)	e.getSource();	
+
+
+				if (shapeselect.getSelectedItem().equals("Circles")){
+					checkerboard.setShape("Circles");
+				}
+
+				else if (shapeselect.getSelectedItem().equals("Stars")){
+					checkerboard.setShape("Stars");
+				}
+				else if (shapeselect.getSelectedItem().equals("Machinery Pieces")){
+					checkerboard.setShape("Machinery Pieces");
+				}
+			} 
+		}
+
+				);
+		layeredPane.add(shapecomboBox);
 
 		JLabel checkersLabel = new JLabel("Checkers");
 		checkersLabel.setFont(new Font("Lithos Pro", Font.BOLD | Font.ITALIC, 32));
@@ -93,7 +121,7 @@ public class IntroCheckers extends JPanel implements ActionListener {
 				instruction.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				instruction.getContentPane().add(new Instructions());
 				instruction.setVisible(true);
-			}
+			} 
 		}
 
 				);
@@ -107,19 +135,22 @@ public class IntroCheckers extends JPanel implements ActionListener {
 
 		textName = new JTextField();
 		textName.setText("NAME");
-		textName.setBounds(283, 174, 134, 28);
+		textName.setBounds(373, 174, 134, 28);
 		layeredPane.add(textName);
 		textName.setColumns(10);
 
 		JLabel labelName = new JLabel("Name?");
 		labelName.setFont(new Font("Lithos Pro", Font.PLAIN, 16));
-		labelName.setBounds(315, 142, 72, 20);
+		labelName.setBounds(400, 142, 72, 20);
 		layeredPane.add(labelName);
 
+		
+		JLabel lblPiece = new JLabel("Piece? ");
+		lblPiece.setFont(new Font("Lithos Pro", Font.PLAIN, 16));
+		lblPiece.setBounds(234, 142, 72, 20);
+		layeredPane.add(lblPiece);
 
 		btnMusic.setBounds(227, 239, 58, 29);
-
-
 		btnMusic.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e) {
@@ -140,6 +171,8 @@ public class IntroCheckers extends JPanel implements ActionListener {
 		JLabel background = new JLabel(backgroundicon);
 		background.setBounds(0, 0, backgroundicon.getIconWidth(),backgroundicon.getIconHeight());
 		layeredPane.add(background);
+		
+
 
 
 
@@ -154,7 +187,7 @@ public class IntroCheckers extends JPanel implements ActionListener {
 		chessboard.setSize(panelWidth, panelHeight);
 		chessboard.setResizable(false);
 		chessboard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		chessboard.getContentPane().add(new CheckersBoard());
+		chessboard.getContentPane().add(checkerboard);
 		chessboard.setVisible(true);
 		new IntroCheckersCaller().disposeIntro();
 	}
