@@ -23,6 +23,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
+import java.net.UnknownHostException;
 
 import javax.swing.JButton;
 import javax.swing.JTextField;
@@ -35,7 +37,7 @@ public class CheckersBoard extends JPanel implements MouseListener {
 	private Icon iconchess = new ImageIcon(getClass().getResource("iconchess.png")); 
 
 	//instance variables 
-    private boolean myturn= false;
+    private boolean myturn= true;
 	
 	private int minutesfirstplayer= 15, secondsfirstplayer=1, minutesecondplayer=15, secondssecondplayer=1; //seconds has to start en 1 segundo 
 	private int squarex1, squarex2, squarey1,squarey2;
@@ -313,7 +315,7 @@ public class CheckersBoard extends JPanel implements MouseListener {
 		time2.stop();
 		time.start();
 		}
-		
+		checkerBoard.moveTo(squarey1, squarex1, squarey2, squarex2);
         myturn = true;
 	}
 	
@@ -513,12 +515,38 @@ public class CheckersBoard extends JPanel implements MouseListener {
 				
 					}
 					
-					checkerBoard.moveTo(squarey1, squarex1, squarey2, squarex2);
+					//checkerBoard.moveTo(squarey1, squarex1, squarey2, squarex2);
+					
+			
+					try {
+						Client.sendMove(squarey1, squarex1, squarey2, squarex2);
+						
+					} catch (UnknownHostException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					try {
+						Client.fetchMove();
+						
+					} catch (UnknownHostException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					
+					
+					
 					myturn = false;
-					firstclick = true;
-					
-					
+					firstclick = true;	
 				}
+				
 				//estos dos  if de abajo es por si el jugador se arrepiente y vuelve a dar click en una de sus piezas 
 				//pues que esa pieza la trate como i fuera su primer click
 				else if (checkerBoard.thereIs(squarey, squarex)==1 & redturn==false)
@@ -584,7 +612,7 @@ public class CheckersBoard extends JPanel implements MouseListener {
 		
 				}
 				
-				checkerBoard.moveTo(squarey1, squarex1, squarey2, squarex2);
+				//checkerBoard.moveTo(squarey1, squarex1, squarey2, squarex2);
 				firstclick = true;
 				myturn = false;
 				

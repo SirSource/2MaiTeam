@@ -33,7 +33,7 @@ public class IntroCheckers extends JPanel implements ActionListener {
 	private Icon musiconicon = new ImageIcon(getClass().getResource("sound.png"));
 	private Icon musicofficon = new ImageIcon(getClass().getResource("speaker.png"));
 	private JButton btnMusic = new JButton(musicofficon);
-private CheckersBoard checkerboard = new CheckersBoard();
+public static  CheckersBoard checkerboard = new CheckersBoard(); // static for moving the GUI in the client class 
 
 	/**
 	 * Create the panel.

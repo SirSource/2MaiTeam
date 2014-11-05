@@ -29,25 +29,7 @@ public  CheckersData(){
 
 
 
-/*private void initBoard() {
-	// TODO Auto-generated method stub
-	for (int col = 0; col < 8; col++) {
-        for (int row = 0; row < 8; row++) {
-            if ( row % 2 == col % 2 ) {
-                if (col < 3)
-                    board[row][col] = BLACK;
-                else if (col > 4)
-                    board[row][col] = RED;
-                else
-                    board[row][col] = EMPTY;
-            }
-            else {
-                board[row][col] = EMPTY;
-            }
-        }
-    }
-}
-*/
+
 public String toString(){
 	
 	String r ="";
@@ -157,54 +139,7 @@ public void moveTo(int fromRow, int fromCol,int toRow, int toCol){
 			
 		}
 	
-	
 
-//		{
-//			board[toRow][toCol]= 1;
-//			board[fromRow][fromCol]=0;
-//			
-//			
-//		}
-//	if(there==0 & there!=here & quefichaes(fromRow, fromCol)==1 ){
-//		board[toRow][toCol]= 1;
-//		board[fromRow][fromCol]=0;
-//	}
-
-       //si te fijas no tenias que verificar there!== here por que "here" comoquiera se va verificar que no este vacio 
-       //para registrar el click y 
-     //  si "there" esta "vacio" (que los estas verificando ya tu) de por si es imposible que there!==here 
-//	if(there==0 & there!=here & quefichaes(fromRow, fromCol)==1 )
-//	{
-//		  //Algo que noto raro en este if statements es que deberian ser : if(fromCol+1==toCol & (fromRow+1==toRow || fromRow-1==toRow))
-//		  // Recuerda que en checkers solo tenemos la opcion de movernos una columna (excepcto en jump) y tenemos
-//		  // dos opciones para movernos de row (para arriba o para abajo )  - Emanuel
-//		if(fromRow+1==toRow & (fromCol+1==toCol || fromCol-1==toCol))
-//		{
-//			board[toRow][toCol]= 1;
-//			board[fromRow][fromCol]=0;
-//			
-//			
-//		}
-//	}
-//	
-//	else if(there==0 & there!=here & quefichaes(fromRow, fromCol) ==3 )
-//	{
-//		// este if statemente le aplica los mismo que comente en el otro if statement
-//		if(fromRow-1==toRow & (fromCol+1==toCol || fromCol-1==toCol))
-//		{
-//			board[toRow][toCol]= 3;
-//			board[fromRow][fromCol]=0;
-//			
-//			
-//		}
-//		
-//		
-//
-//	}
-//	else 
-//		System.out.println("MIERDA");
-//		
-//		
 	}
 /**
  * Determines whats inside the on the middle square between movements.
