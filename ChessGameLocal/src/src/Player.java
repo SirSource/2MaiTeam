@@ -28,6 +28,6 @@ public class Player {
 	
 	public void respond(String r) throws IOException
 	{
-		res.println("Received" + r);
+		res.println(r);
 	}
 }

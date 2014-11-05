@@ -58,9 +58,12 @@ public class Server
 							
 							if (i%2==0) 
 							{
-							 p[i].respond(MESSAGE);
-							 p[i+1].respond(MESSAGE);
-							}
+							 try{
+								 p[i].respond(MESSAGE);
+								 p[i+1].respond(MESSAGE);
+							 }
+							 catch(IOException e1){System.out.println("kdhkdfh"+e1);}
+							 }
 							
 							else
 							{
@@ -86,7 +89,8 @@ public class Server
 
 		catch (IOException e) 
 		{
-			System.out.println(e);
+			
+			System.out.println("here "+e);
 		}
 
 

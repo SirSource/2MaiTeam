@@ -92,6 +92,11 @@ public class CheckersBoard extends JPanel implements MouseListener {
 	private CheckersData checkerBoard = new CheckersData();
 	private JButton btnMusic = new JButton(musicofficon);
 	
+	
+	
+	//Connection to server
+	  
+	
 
 	/**
 	 * Create the panel.
@@ -519,6 +524,7 @@ public class CheckersBoard extends JPanel implements MouseListener {
 					
 			
 					try {
+						new Client();
 						Client.sendMove(squarey1, squarex1, squarey2, squarex2);
 						
 					} catch (UnknownHostException e1) {

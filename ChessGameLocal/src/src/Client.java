@@ -66,6 +66,7 @@ public Client () throws UnknownHostException, IOException{
 	
 	public static void fetchMove() throws IOException{
 		String youSaid = res.readLine();
+		System.out.println(youSaid);
 		int y1 = Integer.parseInt(youSaid.substring(0, 1));
 		int x1 = Integer.parseInt(youSaid.substring(1, 2));
 		int y2 = Integer.parseInt(youSaid.substring(2, 3));
