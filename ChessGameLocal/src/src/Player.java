@@ -28,6 +28,12 @@ public class Player {
 	
 	public void respond(String r) throws IOException
 	{
+		System.out.println(r + "entro a player respond");
 		res.println(r);
 	}
+	public Integer getPlayer(){
+		return Server.quePlayer;
+		
+	}
+	
 }

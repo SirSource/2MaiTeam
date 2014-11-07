@@ -524,7 +524,7 @@ public class CheckersBoard extends JPanel implements MouseListener {
 					
 			
 					try {
-						new Client();
+
 						Client.sendMove(squarey1, squarex1, squarey2, squarex2);
 						
 					} catch (UnknownHostException e1) {
@@ -535,17 +535,17 @@ public class CheckersBoard extends JPanel implements MouseListener {
 						e1.printStackTrace();
 					}
 					
-					try {
-						Client.fetchMove();
-						
-					} catch (UnknownHostException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					
+//					try {
+//						Client.fetchMove();
+//						
+//					} catch (UnknownHostException e1) {
+//						// TODO Auto-generated catch block
+//						e1.printStackTrace();
+//					} catch (IOException e1) {
+//						// TODO Auto-generated catch block
+//						e1.printStackTrace();
+//					}
+//					
 					
 					
 					
@@ -660,7 +660,7 @@ public class CheckersBoard extends JPanel implements MouseListener {
 				
 				 if (minutesfirstplayer<0){
 					 
-					//aqui podemos poner que cree un Frame que diga que el otro jugador gan—
+					//aqui podemos poner que cree un Frame que diga que el otro jugador ganï¿½
 					minutesfirstplayer=0;
 					secondsfirstplayer=0;
 					gameRunning=false;
@@ -680,7 +680,7 @@ public class CheckersBoard extends JPanel implements MouseListener {
 				}
 				 if (minutesecondplayer<0) {
 					 
-					 //aqui podemos poner que cree un Frame que diga que el otro jugador gan—
+					 //aqui podemos poner que cree un Frame que diga que el otro jugador ganï¿½
 					minutesecondplayer=0;
 					secondssecondplayer=0;
 					gameRunning=false;

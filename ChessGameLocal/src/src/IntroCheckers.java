@@ -25,6 +25,8 @@ import java.awt.event.ActionEvent;
 import sun.audio.*;
 
 import java.io.*;
+import java.net.UnknownHostException;
+
 import javax.swing.JComboBox;
 //hello my friend
 public class IntroCheckers extends JPanel implements ActionListener {
@@ -190,5 +192,14 @@ public static  CheckersBoard checkerboard = new CheckersBoard(); // static for m
 		chessboard.getContentPane().add(checkerboard);
 		chessboard.setVisible(true);
 		new IntroCheckersCaller().disposeIntro();
+		try {
+			new Client();
+		} catch (UnknownHostException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 }
