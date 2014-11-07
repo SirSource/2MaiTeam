@@ -37,7 +37,7 @@ public class CheckersBoard extends JPanel implements MouseListener {
 	private Icon iconchess = new ImageIcon(getClass().getResource("iconchess.png")); 
 
 	//instance variables 
-    private boolean myturn= true;
+    private boolean myturn= false;
 	
 	private int minutesfirstplayer= 15, secondsfirstplayer=1, minutesecondplayer=15, secondssecondplayer=1; //seconds has to start en 1 segundo 
 	private int squarex1, squarex2, squarey1,squarey2;
@@ -109,10 +109,11 @@ public class CheckersBoard extends JPanel implements MouseListener {
 	
 		bjMusic =  new AudioPlayer ("Ocarina song of time.mp3");
 // if player is an even # then myturn variable is true other wise is false
-	//	Client.checkplayer();
-		//if (Client.index1 % 2==0){
-	//		myturn = true;
-	//	}
+		Client.checkplayer();
+		System.out.println(Client.index1);
+		if (Client.index1 % 2==0){
+			myturn = true;
+		}
 		
 		
 	

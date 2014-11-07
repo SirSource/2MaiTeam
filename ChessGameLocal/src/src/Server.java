@@ -52,6 +52,7 @@ public class Server
 							System.out.println(MESSAGE);
 
 						if (MESSAGE.equals("indexofplayer")){
+							System.out.println(num+" entereded");
 							p[i].getPlayer(num);
 							
 						}

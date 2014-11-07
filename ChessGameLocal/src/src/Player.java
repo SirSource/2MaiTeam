@@ -32,7 +32,8 @@ public class Player {
 		res.println(r);
 	}
 	public void  getPlayer(int index){
-		res.println( String.valueOf(index));
+	
+		res.println(String.valueOf(index));
 		
 	}
 	

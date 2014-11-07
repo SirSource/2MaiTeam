@@ -35,7 +35,7 @@ public class IntroCheckers extends JPanel implements ActionListener {
 	private Icon musiconicon = new ImageIcon(getClass().getResource("sound.png"));
 	private Icon musicofficon = new ImageIcon(getClass().getResource("speaker.png"));
 	private JButton btnMusic = new JButton(musicofficon);
-public static  CheckersBoard checkerboard = new CheckersBoard(); // static for moving the GUI in the client class 
+	public static  CheckersBoard checkerboard = new CheckersBoard(); // static for moving the GUI in the client class 
 
 	/**
 	 * Create the panel.
@@ -66,11 +66,11 @@ public static  CheckersBoard checkerboard = new CheckersBoard(); // static for m
 		JLabel checkersiconlabel = new JLabel(iconchess);
 		checkersiconlabel.setBounds(191, 49, iconchess.getIconWidth(), iconchess.getIconHeight());
 		layeredPane.add(checkersiconlabel, new Integer(300));
-		
-		
+
+
 		String[] shapes= {"Circles", "Stars", "Machinery Pieces"};
 		JComboBox shapecomboBox = new JComboBox(shapes);
-		
+
 		shapecomboBox.setBounds(199, 176, 134, 27);
 		shapecomboBox.addActionListener(new ActionListener(){
 
@@ -146,7 +146,7 @@ public static  CheckersBoard checkerboard = new CheckersBoard(); // static for m
 		labelName.setBounds(400, 142, 72, 20);
 		layeredPane.add(labelName);
 
-		
+
 		JLabel lblPiece = new JLabel("Piece? ");
 		lblPiece.setFont(new Font("Lithos Pro", Font.PLAIN, 16));
 		lblPiece.setBounds(234, 142, 72, 20);
@@ -173,7 +173,7 @@ public static  CheckersBoard checkerboard = new CheckersBoard(); // static for m
 		JLabel background = new JLabel(backgroundicon);
 		background.setBounds(0, 0, backgroundicon.getIconWidth(),backgroundicon.getIconHeight());
 		layeredPane.add(background);
-		
+
 
 
 
@@ -192,17 +192,6 @@ public static  CheckersBoard checkerboard = new CheckersBoard(); // static for m
 		chessboard.getContentPane().add(checkerboard);
 		chessboard.setVisible(true);
 		new IntroCheckersCaller().disposeIntro();
-		try {
-			new Client();
-		} catch (UnknownHostException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-	
 	}
-	
+
 }

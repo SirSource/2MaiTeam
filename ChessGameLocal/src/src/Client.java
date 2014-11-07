@@ -21,7 +21,7 @@ public class Client {
 	private static String msgToDecode;
 	private static String m;
 	private static int y1,x1,y2,x2;
-	public static int index1 =0;
+	public static int index1 ;
 	private static boolean index = false;
 	public Client () throws UnknownHostException, IOException{
 		s = new Socket("localhost", 7654);
@@ -59,12 +59,14 @@ public class Client {
 					//Aqui descomponen m en 4 numeros tambien pueden enviar m
 					//al metodo y que sea el metodo el que lo descomponga. Como
 					//ustedes quieran.
-				//	System.out.println(m);
+				
 					//try {
 					 
 					 
 					 if (index){
+							System.out.println(m);
 						 index1 = Integer.parseInt(m);
+						 System.out.println(index1);
 					 }
 					 else {
 					 y1 = Integer.parseInt(m.substring(0, 1));
