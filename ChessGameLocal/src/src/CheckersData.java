@@ -4,7 +4,7 @@ public class CheckersData {
 	final int ROWS = 8;
 	final int COLUMN = 8;
 static final int fromR=0, toR=0, fromC=0, toCol=0;
-private int soy,middle;
+private int soy,middle,middleCol, middleRow;
 static final int EMPTY=0, RED=1, RED_KING=2, BLACK=3, BLACK_KING=4;
 int[][]  board ;
 
@@ -223,6 +223,40 @@ public Boolean canJump(int fromRow, int fromCol,int toRow, int toCol){
 	}
 	return canJump ;
 
+}
+
+public Integer getMiddleCol(int fromRow, int fromCol, int toRow, int toCol){
+	if(quefichaes(fromRow, fromCol)==1){
+		middleCol= fromCol+1;
+	}
+	else if(quefichaes(fromRow, fromCol)==3){
+		middleCol = fromCol-1;
+		
+	}
+	return middleCol;
+}
+
+public Integer getMiddleRow(int fromRow, int fromCol, int toRow, int toCol){
+	if(quefichaes(fromRow, fromCol)==1){
+		if(fromRow<toRow){
+			middleRow = fromRow+1;
+		}
+		else if(fromRow>toRow){
+			middleRow = fromRow - 1;
+		}
+	}
+	
+	else if(quefichaes(fromRow, fromCol)==3){
+		if(fromRow<toRow){
+			middleRow = fromRow + 1;
+		}
+		else if(fromRow>toRow){
+			middleRow = fromRow - 1;
+		}
+	
+	
+	}
+	return middleRow;
 }
 
 }

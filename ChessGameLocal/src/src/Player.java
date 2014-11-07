@@ -28,11 +28,11 @@ public class Player {
 	
 	public void respond(String r) throws IOException
 	{
-		System.out.println(r + "entro a player respond");
+		//System.out.println(r + "entro a player respond");
 		res.println(r);
 	}
-	public Integer getPlayer(){
-		return Server.quePlayer;
+	public void  getPlayer(int index){
+		res.println( String.valueOf(index));
 		
 	}
 	

@@ -46,6 +46,7 @@ public class CheckersBoard extends JPanel implements MouseListener {
 	private JLabel labelScorePlayer2 = new JLabel("Score:" + scorePlayer2);
 	private JLabel labeltimerplayer1 = new JLabel("15:0");
 	private JLabel labeltimerplayer2 = new JLabel("15:0");
+	private JLabel turns = new JLabel("Reds Turn");
 	private Timer2 timer2 = new Timer2();   // this is the action listener 
 	private Timer time = new Timer(1000,timer2);   // this is the timer //milliseconds (1 second) for the first player
 	private Timer time2 = new Timer(1000, timer2);  // thi sis the timer for the second player 
@@ -100,15 +101,22 @@ public class CheckersBoard extends JPanel implements MouseListener {
 
 	/**
 	 * Create the panel.
+	 * @throws IOException 
+	 * @throws UnknownHostException 
 	 */
 // 	 @param number of the player 
-	public CheckersBoard() {
+	public CheckersBoard()  {
 	
 		bjMusic =  new AudioPlayer ("Ocarina song of time.mp3");
 // if player is an even # then myturn variable is true other wise is false
+	//	Client.checkplayer();
+		//if (Client.index1 % 2==0){
+	//		myturn = true;
+	//	}
+		
 		
 	
-
+      
 		setBackground(new Color(160, 82, 45));
 		Icon backgroundicon = new ImageIcon(getClass().getResource("background4.png"));
 		setPreferredSize(new Dimension(backgroundicon.getIconWidth(), backgroundicon.getIconHeight()));
@@ -196,6 +204,12 @@ public class CheckersBoard extends JPanel implements MouseListener {
 		labelPlayer2.setFont(new Font("Lucida Bright", Font.PLAIN, 22));
 		labelPlayer2.setBounds(23, 19, 115, 27);
 		layeredPane.add(labelPlayer2, new Integer(300));
+		
+		
+		turns.setForeground(Color.WHITE);
+		turns.setFont(new Font("Lucida Bright", Font.PLAIN, 22));
+		turns.setBounds(456, 0, 139, 27);
+		layeredPane.add(turns);
 
 		JLabel labelTime = new JLabel("Time Remaining:");
 		labelTime.setFont(new Font("Lucida Blackletter", Font.PLAIN, 15));
@@ -308,8 +322,23 @@ public class CheckersBoard extends JPanel implements MouseListener {
 	        redpieces[i].setBounds(getxPixels(squarex2), getyPixels(squarey2), redpiecesicon.getIconWidth(), redpiecesicon.getIconHeight());
 	        redpieces[i].setIcon(redpiecesicon);
 	    	redturn=false;
+	    	turns.setText("Blacks Turn");
 	    	time2.start(); 
 			time.stop();
+			
+			if(myturn == false && squarex1 - 2 == squarex2){
+				scorePlayer1 +=1;
+				labelScorePlayer1.setText("Score:" + scorePlayer1);
+				//removing from the GUI 
+				int j =0;
+	
+				 j = getBlackPiece(checkerBoard.getMiddleCol(squarey1, squarex1, squarey2, squarex2),checkerBoard.getMiddleRow(squarey1, squarex1, squarey2, squarex2));
+				 blackpieces[j].setBounds(0, 0, 0, 0);
+				 layeredPanecheckerBoard.remove(blackpieces[j]);
+				  //removing from the array
+				 checkerBoard.remove(checkerBoard.getMiddleRow(squarey1, squarex1, squarey2, squarex2), checkerBoard.getMiddleCol(squarey1, squarex1, squarey2, squarex2));
+				
+			}
 		}
 		else { 
 	    i=0;
@@ -317,11 +346,25 @@ public class CheckersBoard extends JPanel implements MouseListener {
 		blackpieces[i].setIcon(blackpiecesicon);
 		blackpieces[i].setBounds( getxPixels(squarex2), getyPixels(squarey2), blackpiecesicon.getIconWidth(),blackpiecesicon.getIconHeight());
 		redturn=true;
+		turns.setText("Reds Turn");
 		time2.stop();
 		time.start();
+		if(myturn == false && squarex1 + 2 == squarex2){
+			scorePlayer2 +=1;
+			labelScorePlayer2.setText("Score:" + scorePlayer2);
+			int j =0;
+		    j = getRedPiece(checkerBoard.getMiddleCol(squarey1, squarex1, squarey2, squarex2),checkerBoard.getMiddleRow(squarey1, squarex1, squarey2, squarex2));
+		    redpieces[j].setBounds(0, 0, 0, 0);
+		    layeredPanecheckerBoard.remove(redpieces[j]);
+		    //removing from the array
+		 checkerBoard.remove(checkerBoard.getMiddleRow(squarey1, squarex1, squarey2, squarex2), checkerBoard.getMiddleCol(squarey1, squarex1, squarey2, squarex2));
+			
+		}
 		}
 		checkerBoard.moveTo(squarey1, squarex1, squarey2, squarex2);
         myturn = true;
+        
+        
 	}
 	
 	public int getBlackPiece(int col,int row){
@@ -509,14 +552,14 @@ public class CheckersBoard extends JPanel implements MouseListener {
 					if (checkerBoard.thereIs(squarey1, squarex1)==1){
 
 				moveGUI(squarey1, squarex1, squarey2, squarex2);
-				
+				myturn = false;
 				//redturn=true;
 					}  
 					
 					else if (checkerBoard.thereIs(squarey1, squarex1)==3){
 
 				moveGUI(squarey1, squarex1, squarey2, squarex2);
-
+				myturn = false;
 				
 					}
 					
@@ -526,6 +569,7 @@ public class CheckersBoard extends JPanel implements MouseListener {
 					try {
 
 						Client.sendMove(squarey1, squarex1, squarey2, squarex2);
+					
 						
 					} catch (UnknownHostException e1) {
 						// TODO Auto-generated catch block
@@ -533,23 +577,8 @@ public class CheckersBoard extends JPanel implements MouseListener {
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
-					}
+					}	
 					
-//					try {
-//						Client.fetchMove();
-//						
-//					} catch (UnknownHostException e1) {
-//						// TODO Auto-generated catch block
-//						e1.printStackTrace();
-//					} catch (IOException e1) {
-//						// TODO Auto-generated catch block
-//						e1.printStackTrace();
-//					}
-//					
-					
-					
-					
-					myturn = false;
 					firstclick = true;	
 				}
 				
@@ -588,6 +617,20 @@ public class CheckersBoard extends JPanel implements MouseListener {
 
 				if (checkerBoard.thereIs(squarey1, squarex1)==1){
 				moveGUI(squarey1, squarex1, squarey2, squarex2);
+				
+				try {
+
+					Client.sendMove(squarey1, squarex1, squarey2, squarex2);
+				
+					
+				} catch (UnknownHostException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+	
 				//removing from the GUI 
 			     int j =0;
 			    j = getRedPiece(CheckersData.midcol,CheckersData.midrow);
@@ -604,11 +647,27 @@ public class CheckersBoard extends JPanel implements MouseListener {
 				else if (checkerBoard.thereIs(squarey1, squarex1)==3){
 
 			moveGUI(squarey1, squarex1, squarey2, squarex2);
+			
+			try {
+
+				Client.sendMove(squarey1, squarex1, squarey2, squarex2);
+			
+				
+			} catch (UnknownHostException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		
+			
 			//removing from the GUI 
 			int j =0;
 			 j = getBlackPiece(CheckersData.midcol,CheckersData.midrow);
 			 blackpieces[j].setBounds(0, 0, 0, 0);
 			 layeredPanecheckerBoard.remove(blackpieces[j]);
+			 
 			 
 			  //removing from the array
 			 checkerBoard.remove(CheckersData.midrow, CheckersData.midcol);

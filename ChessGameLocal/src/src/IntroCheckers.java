@@ -201,5 +201,8 @@ public static  CheckersBoard checkerboard = new CheckersBoard(); // static for m
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		
+	
 	}
+	
 }
