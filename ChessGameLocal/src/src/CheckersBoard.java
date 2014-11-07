@@ -38,8 +38,11 @@ public class CheckersBoard extends JPanel implements MouseListener {
 
 	//instance variables 
     private boolean myturn= false;
+    private boolean bothready= false;
 	
 	private int minutesfirstplayer= 15, secondsfirstplayer=1, minutesecondplayer=15, secondssecondplayer=1; //seconds has to start en 1 segundo 
+	private int myindex=0; 
+	
 	private int squarex1, squarex2, squarey1,squarey2;
 	private int scorePlayer1=0, scorePlayer2=0;
 	private JLabel labelScorePlayer1 = new JLabel("Score:" + scorePlayer1);
@@ -48,8 +51,13 @@ public class CheckersBoard extends JPanel implements MouseListener {
 	private JLabel labeltimerplayer2 = new JLabel("15:0");
 	private JLabel turns = new JLabel("Reds Turn");
 	private Timer2 timer2 = new Timer2();   // this is the action listener 
+	
 	private Timer time = new Timer(1000,timer2);   // this is the timer //milliseconds (1 second) for the first player
 	private Timer time2 = new Timer(1000, timer2);  // thi sis the timer for the second player 
+	
+	private Timerindexchecker indexaction = new Timerindexchecker();
+	private Timer indextimer = new Timer (1000, indexaction);
+	
 	private boolean gameRunning=true, redturn = true, firstclick = true;
 
 	private JLabel[] redpieces = new JLabel[12]; 
@@ -109,12 +117,7 @@ public class CheckersBoard extends JPanel implements MouseListener {
 	
 		bjMusic =  new AudioPlayer ("Ocarina song of time.mp3");
 // if player is an even # then myturn variable is true other wise is false
-		Client.checkplayer();
-		System.out.println(Client.index1);
-		if (Client.index1 % 2==0){
-			myturn = true;
-		}
-		
+	
 		
 	
       
@@ -256,7 +259,7 @@ public class CheckersBoard extends JPanel implements MouseListener {
 		layeredPane.add(labeltimerplayer1);
 
 
-		time.start();  // acivate every time is the first players turn
+		//time.start();  // acivate every time is the first players turn
 		
 
 	
@@ -310,6 +313,27 @@ public class CheckersBoard extends JPanel implements MouseListener {
 			blackselected.setImage(blackmachineryselect.getImage());
            redselected.setImage(redmachineryselect.getImage());
 		}
+		
+	}
+	
+	public void myturn (){
+		Client.checkplayer();
+		//myindex = Client.index1;
+		//System.out.println("fudge!!!"+ Client.getfudge());
+		System.out.println("checkerboard index "+ Client.getIndex());
+		if (myindex %2 ==0){
+			 // este es el timer de verificar si hay dos players 
+			bothready= false; 
+			myturn = true;
+			indextimer.start();
+			
+		}
+		else {
+			myturn =  false;
+			time.start(); // este es el timer del rojo 
+			bothready= true; 
+		}
+		
 		
 	}
 	
@@ -761,4 +785,29 @@ public class CheckersBoard extends JPanel implements MouseListener {
 		}   
 
 	}//end of class timer
+	
+	public class Timerindexchecker implements ActionListener{
+
+
+		public void actionPerformed(ActionEvent e) {
+			Client.checkplayer();
+			//int currentindex= Client.index1;
+			
+			if (myindex < Client.getIndex()){
+				indextimer.stop();	
+				bothready = true; 
+				time.start();
+			}
+			
+			
+		
+		}
+		
+		
+	
+	}
+	
+		
+	
+	
 }

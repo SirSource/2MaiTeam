@@ -21,7 +21,8 @@ public class Client {
 	private static String msgToDecode;
 	private static String m;
 	private static int y1,x1,y2,x2;
-	public static int index1 ;
+	private static int index1 ;
+	public static int fudge;
 	private static boolean index = false;
 	public Client () throws UnknownHostException, IOException{
 		s = new Socket("localhost", 7654);
@@ -56,17 +57,15 @@ public class Client {
 
 			
 					 m = res.readLine();
-					//Aqui descomponen m en 4 numeros tambien pueden enviar m
-					//al metodo y que sea el metodo el que lo descomponga. Como
-					//ustedes quieran.
-				
-					//try {
+		
 					 
 					 
 					 if (index){
 							System.out.println(m);
-						 index1 = Integer.parseInt(m);
-						 System.out.println(index1);
+							setIndex(Integer.parseInt(m));
+						// index1 = Integer.parseInt(m);
+						// fudge = 9001;
+						 System.out.println("client index " + index1);
 					 }
 					 else {
 					 y1 = Integer.parseInt(m.substring(0, 1));
@@ -76,13 +75,7 @@ public class Client {
 					fetchMove(y1, x1, y2, x2);
 					}
 					 index =false;
-					//}
-					
-//					catch (Run e) {
-//						
-//					}
-					
-					//aqui va el metodo de mover el GUI
+
 				}
 			
 			catch (IOException e) {
@@ -92,6 +85,16 @@ public class Client {
 		}
 	}
 	//
+	
+	
+	public static int getIndex(){
+		//fudge= index1;
+		return index1;
+		
+	}
+	public static void setIndex(int i ){
+		index1 = i;
+	}
 	public static void sendMove(int a, int b, int c, int d) throws UnknownHostException, IOException{
 
 

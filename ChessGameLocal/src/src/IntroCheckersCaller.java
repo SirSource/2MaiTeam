@@ -17,23 +17,6 @@ public class IntroCheckersCaller {
 	public static void main(String[] args) {
 		int panelWidth=691, panelHeight=432;
 		// TODO Auto-generated method stub
-
-		
-		try {
-			new Client();
-		} catch (UnknownHostException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-
-	
-		
-		
-		
 		
 		frame.setSize(panelWidth, panelHeight);
 		frame.setResizable(false);

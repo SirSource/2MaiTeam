@@ -192,6 +192,22 @@ public class IntroCheckers extends JPanel implements ActionListener {
 		chessboard.getContentPane().add(checkerboard);
 		chessboard.setVisible(true);
 		new IntroCheckersCaller().disposeIntro();
+		
+		try {
+			new Client();
+		} catch (UnknownHostException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		checkerboard.myturn();
+		
+		
+		
+		
 	}
 
 }
