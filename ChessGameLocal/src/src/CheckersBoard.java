@@ -41,7 +41,7 @@ public class CheckersBoard extends JPanel implements MouseListener {
     private boolean bothready= false;
 	
 	private int minutesfirstplayer= 15, secondsfirstplayer=1, minutesecondplayer=15, secondssecondplayer=1; //seconds has to start en 1 segundo 
-	private int myindex=0; 
+	private int myindex; 
 	
 	private int squarex1, squarex2, squarey1,squarey2;
 	private int scorePlayer1=0, scorePlayer2=0;
@@ -317,25 +317,45 @@ public class CheckersBoard extends JPanel implements MouseListener {
 	}
 	
 	public void myturn (){
-		Client.checkplayer();
-		//myindex = Client.index1;
-		//System.out.println("fudge!!!"+ Client.getfudge());
-		System.out.println("checkerboard index "+ Client.getIndex());
-		if (myindex %2 ==0){
-			 // este es el timer de verificar si hay dos players 
-			bothready= false; 
-			myturn = true;
-			indextimer.start();
+		IntroCheckers.client.checkplayer();
+		boolean done =false;
+		for (int i=0; i<=799999999 ; i++){
+			if (i==799999998){
+				done = true;
+			}
+		}
+		try{
+			Thread.sleep(1000);
 			
 		}
-		else {
-			myturn =  false;
-			time.start(); // este es el timer del rojo 
-			bothready= true; 
+		catch(InterruptedException ex){
+			Thread.currentThread().interrupt();
 		}
+			if (done){
+		System.out.println("chckerboard myturnfirst()"+myindex);
+			myindex= IntroCheckers.client.getIndex();
+			System.out.println("chckerboard myturnsecond()"+myindex);
+			if (myindex%2 == 0){
+				 // este es el timer de verificar si hay dos players 
+				bothready= false; 
+				myturn = true;
+				indextimer.start();
+				time.stop();
+				
+			}
+			else {
+				myturn =  false;
+				time.start(); // este es el timer del rojo 
+				bothready= true; 
+			
+			}
+			}
+
 		
 		
 	}
+	
+
 	
 	
 	public void moveGUI(int squarey1, int squarex1, int squarey2, int squarex2 ){
@@ -539,7 +559,7 @@ public class CheckersBoard extends JPanel implements MouseListener {
 			int squarex= getxSquare(col2);    /// this will be the variables that will be checked to verify of there is something or if the move is valid
 //			System.out.println(squarex+"-"+ squarey);
 			// x = colums y= rows
-			if (firstclick && myturn){
+			if (firstclick && myturn && bothready){
 
 			if (checkerBoard.thereIs(squarey, squarex)==1 && redturn== false){
 				squarex1= squarex;
@@ -790,14 +810,27 @@ public class CheckersBoard extends JPanel implements MouseListener {
 
 
 		public void actionPerformed(ActionEvent e) {
-			Client.checkplayer();
-			//int currentindex= Client.index1;
+			int currentindex;
+			IntroCheckers.client.checkplayer();
+			boolean done =false;
 			
-			if (myindex < Client.getIndex()){
-				indextimer.stop();	
-				bothready = true; 
-				time.start();
+			for (int i=0; i<=799999999 ; i++){
+				if (i==799999998){
+					done = true;
+				}
 			}
+				if (done){
+				 currentindex= IntroCheckers.client.getIndex();
+					
+				 if (myindex < currentindex){
+						indextimer.stop();	
+						bothready = true; 
+						time.start();
+					}
+				 
+				}
+			
+		
 			
 			
 		

@@ -10,11 +10,12 @@ import java.net.Socket;
 public class Player {
 	private BufferedReader req;
 	private PrintStream res;
-	
+	private int num;
 	
 	public Player(Socket c) throws IOException {
 		req= new BufferedReader(new InputStreamReader(c.getInputStream()));
         res = new PrintStream(c.getOutputStream());
+
 	}
 	
 	public boolean ready() throws IOException{
@@ -28,13 +29,15 @@ public class Player {
 	
 	public void respond(String r) throws IOException
 	{
-		//System.out.println(r + "entro a player respond");
+		System.out.println(r + "entro a player respond");
 		res.println(r);
 	}
+	
+	
 	public void  getPlayer(int index){
 	
 		res.println(String.valueOf(index));
 		
 	}
-	
+
 }

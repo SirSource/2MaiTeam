@@ -11,7 +11,7 @@ int[][]  board ;
 public static int midrow,midcol;
 
 /**
- * Constructor of CheckersData holds all the info of the game.
+ * Constructor of CheckersData matrix 8x8 that holds all the info of the game like where are the pieces.
  */
 public  CheckersData(){
 	
@@ -49,7 +49,7 @@ public String toString(){
  * To know what is the element in the specified position in the Array.
  * @param row
  * @param col
- * @return The element in that position
+ * @return The element in that position in the board
  */
 public int thereIs(int row, int col){
 	// (comentario para mi mismo)  este metodo lo vamos voy a usar para cuando el usuario haga el primer click
@@ -73,7 +73,7 @@ public int thereIs(int row, int col){
  * Para saber que ficha es la que esta en esa posicion.
  * @param row Array row
  * @param col Array col
- * @return La ficha que esta en la posicion
+ * @return The element in that array position
  */
 
 
@@ -97,7 +97,14 @@ public int quefichaes(int row, int col){
 	
 }
 
-
+/**
+ * This checks if a certain move is legal or not.
+ * @param fromRow 
+ * @param toRow
+ * @param fromCol
+ * @param toCol
+ * @return boolean
+ */
 public Boolean legalMove(int fromRow, int toRow,int fromCol, int toCol){
 	// editado por emanuel   oct18 11:19 
 	if (thereIs(fromRow, fromCol)==1 & (fromRow+1 == toRow || fromRow-1==toRow) & fromCol+1==toCol & thereIs(toRow,toCol)==0){   
@@ -118,7 +125,13 @@ public Boolean legalMove(int fromRow, int toRow,int fromCol, int toCol){
 // yo pienso que en fin vamos a tener que borrar lo que escribiste en el metodo y ponerlo en algo sencillo 
 // ya que afuera de este metodo me voy a encargar de verificar esto que pusiste para a ver si vale la pena registrar 
 // el click y si conseguimos los clicks "legales" hacemos el movimiento
-
+/**
+ * This method makes a move and makes the changes in the Array Board associated by it.
+ * @param fromRow
+ * @param fromCol
+ * @param toRow
+ * @param toCol
+ */
 public void moveTo(int fromRow, int fromCol,int toRow, int toCol){
 	int there = thereIs(toRow, toCol);
 	int here = thereIs(fromRow, fromCol);
@@ -147,7 +160,7 @@ public void moveTo(int fromRow, int fromCol,int toRow, int toCol){
  * @param fromCol
  * @param toRow
  * @param toCol
- * @return
+ * @return middle //Which is the exact item or piece in the middle position between moves
  */
 public int whatsOnTheMiddle(int fromRow, int fromCol,int toRow, int toCol){
 	
@@ -193,7 +206,11 @@ public int whatsOnTheMiddle(int fromRow, int fromCol,int toRow, int toCol){
 	
 	
 }
-
+/**
+ * Removes the
+ * @param midRow
+ * @param midCol
+ */
 public void remove(int midRow, int midCol){
 	board[midRow][midCol]= 0;
 }

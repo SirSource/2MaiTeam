@@ -37,7 +37,7 @@ public class Server
 				try {
 					s.setSoTimeout(100);
 					c = s.accept();
-					p[++num]=new Player(c);
+					p[++num]= new Player(c);
 					//quePlayer = 1 + quePlayer;
 					System.out.println("player "+(num+1)+" entereded");
 				}
@@ -59,8 +59,7 @@ public class Server
 						
 						else 	if (i%2==0) 
 							{
-							//	System.out.println("we r even");
-								//p[i].respond(MESSAGE);
+							
 								p[i+1].respond(MESSAGE);
 
 
@@ -68,8 +67,7 @@ public class Server
 
 							else
 							{
-							//	System.out.println("we are odd");
-							//	p[i].respond(MESSAGE);
+						
 								p[i-1].respond(MESSAGE);	
 							}
 

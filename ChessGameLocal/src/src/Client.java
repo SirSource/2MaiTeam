@@ -21,7 +21,7 @@ public class Client {
 	private static String msgToDecode;
 	private static String m;
 	private static int y1,x1,y2,x2;
-	private static int index1 ;
+	public int index1=2 ;
 	public static int fudge;
 	private static boolean index = false;
 	public Client () throws UnknownHostException, IOException{
@@ -61,11 +61,13 @@ public class Client {
 					 
 					 
 					 if (index){
-							System.out.println(m);
+							System.out.println("Server response"+ m);
+							index1 = Integer.parseInt(m);
 							setIndex(Integer.parseInt(m));
-						// index1 = Integer.parseInt(m);
-						// fudge = 9001;
-						 System.out.println("client index " + index1);
+							
+					
+						 System.out.println("client index " + index1 );
+					
 					 }
 					 else {
 					 y1 = Integer.parseInt(m.substring(0, 1));
@@ -87,12 +89,12 @@ public class Client {
 	//
 	
 	
-	public static int getIndex(){
-		//fudge= index1;
+	public int getIndex( ){
+		System.out.println("get index index1 "+ index1);
 		return index1;
 		
 	}
-	public static void setIndex(int i ){
+	public void setIndex(int i ){
 		index1 = i;
 	}
 	public static void sendMove(int a, int b, int c, int d) throws UnknownHostException, IOException{
@@ -109,6 +111,7 @@ public class Client {
 		index = true;
 		
 	}
+
 
 
 	public static void fetchMove(int y1, int x1, int y2, int x2 ) throws IOException{

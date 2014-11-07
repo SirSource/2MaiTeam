@@ -36,7 +36,7 @@ public class IntroCheckers extends JPanel implements ActionListener {
 	private Icon musicofficon = new ImageIcon(getClass().getResource("speaker.png"));
 	private JButton btnMusic = new JButton(musicofficon);
 	public static  CheckersBoard checkerboard = new CheckersBoard(); // static for moving the GUI in the client class 
-
+public static Client client; 
 	/**
 	 * Create the panel.
 	 */
@@ -54,7 +54,7 @@ public class IntroCheckers extends JPanel implements ActionListener {
 		Icon iconquestion = new ImageIcon(getClass().getResource("questionshield.png"));
 
 
-		; 
+	
 		setPreferredSize(new Dimension(backgroundicon.getIconWidth(), backgroundicon.getIconHeight()));
 		JLayeredPane layeredPane = new JLayeredPane();  //in case you get ideas, yeas you need the pane 
 		layeredPane.setBorder(null);
@@ -194,7 +194,10 @@ public class IntroCheckers extends JPanel implements ActionListener {
 		new IntroCheckersCaller().disposeIntro();
 		
 		try {
-			new Client();
+		
+			client = new Client();
+			
+
 		} catch (UnknownHostException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
