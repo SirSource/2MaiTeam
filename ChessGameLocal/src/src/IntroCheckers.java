@@ -38,11 +38,11 @@ public class IntroCheckers extends JPanel implements ActionListener {
 	public static  CheckersBoard checkerboard = new CheckersBoard(); // static for moving the GUI in the client class 
 public static Client client; 
 	/**
-	 * Create the panel.
+	 * Create the panel with labels, buttons, icons,etc.
 	 */
 	public IntroCheckers() {
-		bjMusic =  new AudioPlayer ("Ocarina song of time.mp3");
-		bjMusic.play();
+		bjMusic =  new AudioPlayer ("Ocarina song of time.mp3");//for the music
+		bjMusic.play();//plays the music
 
 		setBackground(new Color(153, 102, 0));
 		setForeground(new Color(139, 69, 19));
@@ -113,7 +113,10 @@ public static Client client;
 		JButton buttonInstructions = new JButton("Instructions", iconquestion);
 		buttonInstructions.setFont(new Font("Lucida Calligraphy", Font.PLAIN, 15));
 		buttonInstructions.addActionListener(new ActionListener(){
-
+/**
+ * Action when you pressed "Instructions button" it opens a new frame with written instructions
+ * of checkers game.
+ */
 			public void actionPerformed(ActionEvent e) {
 				int panelWidth=1075, panelHeight=672;
 
@@ -134,14 +137,14 @@ public static Client client;
 		labelWelcome.setFont(new Font("Lithos Pro", Font.PLAIN, 16));
 		labelWelcome.setBounds(304, 102, 89, 16);
 		layeredPane.add(labelWelcome);
-
-		textName = new JTextField();
-		textName.setText("NAME");
+ 
+		textName = new JTextField(); 
+		textName.setText("NAME");// Textfield that shows the "name"
 		textName.setBounds(373, 174, 134, 28);
 		layeredPane.add(textName);
 		textName.setColumns(10);
 
-		JLabel labelName = new JLabel("Name?");
+		JLabel labelName = new JLabel("Name?");//Label that shows Name? and ask user for his or her name.
 		labelName.setFont(new Font("Lithos Pro", Font.PLAIN, 16));
 		labelName.setBounds(400, 142, 72, 20);
 		layeredPane.add(labelName);
@@ -154,7 +157,9 @@ public static Client client;
 
 		btnMusic.setBounds(227, 239, 58, 29);
 		btnMusic.addActionListener(new ActionListener(){
-
+/**
+ * Action when you press the music button.  It will stop the music, change icon and viceversa.
+ */
 			public void actionPerformed(ActionEvent e) {
 				if (AudioPlayer.clip.isRunning()){
 					btnMusic.setIcon(musiconicon);
@@ -179,7 +184,10 @@ public static Client client;
 
 
 	}
-
+/**
+ * Action when you press "I am ready".  It shows another frame containing the checkers 
+ * board.
+ */
 	public void actionPerformed(ActionEvent e) 
 	{
 		int panelWidth=1075, panelHeight=700;

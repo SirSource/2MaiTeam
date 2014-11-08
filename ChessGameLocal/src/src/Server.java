@@ -4,7 +4,11 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
-
+/**
+ * 
+ * @author gustavomarrero
+ *
+ */
 
 public class Server 
 {
@@ -14,6 +18,9 @@ public class Server
 	//public static int quePlayer;
 	
 	//private ArrayData board;
+	/**
+	 * Creates a new ServerSocket and handles Exceptions.
+	 */
 	public Server()
 	{
 		try 
@@ -28,7 +35,9 @@ public class Server
 		}
 
 	}
-
+/**
+ * Method that tells the server what to do, like accepting client connections
+ */
 	public void serve()
 	{
 		Socket c;
@@ -36,8 +45,8 @@ public class Server
 			try {
 				try {
 					s.setSoTimeout(100);
-					c = s.accept();
-					p[++num]= new Player(c);
+					c = s.accept(); //Accepts the connection
+					p[++num]= new Player(c); //Creates a new player
 					//quePlayer = 1 + quePlayer;
 					System.out.println("player "+(num+1)+" entereded");
 				}
@@ -47,7 +56,7 @@ public class Server
 					{
 						if (p[i].ready())
 						{
-					
+					// Receives the message from client
 							String MESSAGE = p[i].request();
 							System.out.println(MESSAGE);
 
@@ -59,7 +68,7 @@ public class Server
 						
 						else 	if (i%2==0) 
 							{
-							
+							// Server responds to other players
 								p[i+1].respond(MESSAGE);
 
 
@@ -67,7 +76,7 @@ public class Server
 
 							else
 							{
-						
+						//Respond to other player
 								p[i-1].respond(MESSAGE);	
 							}
 

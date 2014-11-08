@@ -5,6 +5,10 @@ import javax.sound.sampled.*;
 
 public class AudioPlayer {
 public static Clip clip;
+/**
+ * Constructor of AudioPlayer, this handles the mp3 streaming audio.
+ * @param s name of mp3 file
+ */
 	 public AudioPlayer (String s){
 		 try{
 			 AudioInputStream ais = AudioSystem.getAudioInputStream(getClass().getResourceAsStream(s));
@@ -27,7 +31,9 @@ public static Clip clip;
 		 }
 		 
 	 }
-	 
+	 /**
+	  * Starts the audioplayer.
+	  */
 	 public void play (){
 		 if (clip == null )  return;    // si el file es muy large me aparece null 
 		 stop();
@@ -35,13 +41,17 @@ public static Clip clip;
 		 clip.start();
 		 
 	 }
-
+/**
+ *  Stops the audioStream.
+ */
 	public void stop() {
 		// TODO Auto-generated method stub
 		if(clip.isRunning()){
 			clip.stop();}
 	}
-	
+	/**
+	 * 
+	 */
 	public void close(){
 		stop();
 		clip.close();

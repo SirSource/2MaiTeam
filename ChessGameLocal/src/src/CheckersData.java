@@ -28,7 +28,9 @@ public  CheckersData(){
 }
 
 
-
+/**
+ * To print a representation of the 8x8 Array.
+ */
 
 public String toString(){
 	
@@ -47,11 +49,11 @@ public String toString(){
 }
 /**
  * To know what is the element in the specified position in the Array.
- * @param row
- * @param col
+ * @param Row initial Row position		
+ * @param Col initial Column position
  * @return The element in that position in the board
  */
-public int thereIs(int row, int col){
+public int thereIs(int Row, int Col){
 	// (comentario para mi mismo)  este metodo lo vamos voy a usar para cuando el usuario haga el primer click
 	//si realmente apreto una de sus fichas  pues que registre la localizacion del click 
 	// Y tambien lo voy a usar si en el segundo click esta vacio y si es legal la movida pues que la registre 
@@ -64,7 +66,7 @@ public int thereIs(int row, int col){
 	//fuera su primer click 
 	//WORKING
 
-	return board[row][col];
+	return board[Row][Col];
 	
 }
 
@@ -76,7 +78,12 @@ public int thereIs(int row, int col){
  * @return The element in that array position
  */
 
-
+/**
+ * 
+ * @param row
+ * @param col
+ * @return
+ */
 public int quefichaes(int row, int col){
 	//WORKING!
 	// no entiendo por que esta este metodo si existe el metodo de "thereIs" que creo que hace lo mismo -Emanuel 
@@ -127,10 +134,10 @@ public Boolean legalMove(int fromRow, int toRow,int fromCol, int toCol){
 // el click y si conseguimos los clicks "legales" hacemos el movimiento
 /**
  * This method makes a move and makes the changes in the Array Board associated by it.
- * @param fromRow
- * @param fromCol
- * @param toRow
- * @param toCol
+ * @param fromRow the initial position in the row axis
+ * @param fromCol the initial column position
+ * @param toRow the final row position 
+ * @param toCol the final column position
  */
 public void moveTo(int fromRow, int fromCol,int toRow, int toCol){
 	int there = thereIs(toRow, toCol);
@@ -156,10 +163,10 @@ public void moveTo(int fromRow, int fromCol,int toRow, int toCol){
 	}
 /**
  * Determines whats inside the on the middle square between movements.
- * @param fromRow
- * @param fromCol
- * @param toRow
- * @param toCol
+ * @param fromRow initial row position in a move
+ * @param fromCol initial column position in a move
+ * @param toRow final row position in a move
+ * @param toCol final column position in a move
  * @return middle //Which is the exact item or piece in the middle position between moves
  */
 public int whatsOnTheMiddle(int fromRow, int fromCol,int toRow, int toCol){
@@ -207,13 +214,21 @@ public int whatsOnTheMiddle(int fromRow, int fromCol,int toRow, int toCol){
 	
 }
 /**
- * Removes the
- * @param midRow
- * @param midCol
+ * Removes the the piece for 
+ * @param midRow middle row position in a move
+ * @param midCol middle column position in a move
  */
 public void remove(int midRow, int midCol){
 	board[midRow][midCol]= 0;
 }
+/**
+ * Method that tells if that jump is a legal move.
+ * @param fromRow initial row from where is the piece
+ * @param fromCol initial column from where the piece is 
+ * @param toRow the row that you want the piece to move to
+ * @param toCol the column that you want the piece to move to
+ * @return canJump  either True or False
+ */
 
 public Boolean canJump(int fromRow, int fromCol,int toRow, int toCol){
 	Boolean canJump;
@@ -241,7 +256,14 @@ public Boolean canJump(int fromRow, int fromCol,int toRow, int toCol){
 	return canJump ;
 
 }
-
+/**
+ * To get the location in Array of the MiddleColumn bewtween a move.
+ * @param fromRow initial row from where is the piece
+ * @param fromCol initial column from where the piece is 
+ * @param toRow the row that you want the piece to move to
+ * @param toCol the column that you want the piece to move to
+ * @return middleCol
+ */
 public Integer getMiddleCol(int fromRow, int fromCol, int toRow, int toCol){
 	if(quefichaes(fromRow, fromCol)==1){
 		middleCol= fromCol+1;
@@ -252,7 +274,14 @@ public Integer getMiddleCol(int fromRow, int fromCol, int toRow, int toCol){
 	}
 	return middleCol;
 }
-
+/**
+ * To get the location in the Array Board of the MiddleRow between to moves.
+ * @param fromRow initial row from where is the piece
+ * @param fromCol initial column from where the piece is 
+ * @param toRow the row that you want the piece to move to
+ * @param toCol the column that you want the piece to move to
+ * @return middleRow location or number format
+ */
 public Integer getMiddleRow(int fromRow, int fromCol, int toRow, int toCol){
 	if(quefichaes(fromRow, fromCol)==1){
 		if(fromRow<toRow){
