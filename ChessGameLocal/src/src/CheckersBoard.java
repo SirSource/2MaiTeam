@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 
 import javax.swing.JButton;
-import javax.swing.JTextField;
+
 
 
 public class CheckersBoard extends JPanel implements MouseListener {
@@ -37,8 +37,8 @@ public class CheckersBoard extends JPanel implements MouseListener {
 	private Icon iconchess = new ImageIcon(getClass().getResource("iconchess.png")); 
 
 	//instance variables 
-    private boolean myturn= false;
-    private boolean bothready= false;
+   
+   
 	
 	private int minutesfirstplayer= 15, secondsfirstplayer=1, minutesecondplayer=15, secondssecondplayer=1; //seconds has to start en 1 segundo 
 	private int myindex; 
@@ -49,7 +49,10 @@ public class CheckersBoard extends JPanel implements MouseListener {
 	private JLabel labelScorePlayer2 = new JLabel("Score:" + scorePlayer2);
 	private JLabel labeltimerplayer1 = new JLabel("15:0");
 	private JLabel labeltimerplayer2 = new JLabel("15:0");
-	private JLabel turns = new JLabel("Reds Turn");
+	private JLabel turns = new JLabel("My turn");
+	private JLabel labelIam = new JLabel("I am Red");
+	
+	
 	private Timer2 timer2 = new Timer2();   // this is the action listener 
 	
 	private Timer time = new Timer(1000,timer2);   // this is the timer //milliseconds (1 second) for the first player
@@ -58,13 +61,13 @@ public class CheckersBoard extends JPanel implements MouseListener {
 	private Timerindexchecker indexaction = new Timerindexchecker();
 	private Timer indextimer = new Timer (1000, indexaction);
 	
-	private boolean gameRunning=true, redturn = true, firstclick = true;
+	private boolean gameRunning=true, redturn = true, firstclick = true, bothready= false, myturn= false;
 
 	private JLabel[] redpieces = new JLabel[12]; 
 	private JLabel[] blackpieces = new JLabel[12]; 
 
 	
-	private JLayeredPane layeredPanecheckerBoard = new JLayeredPane(); // [ane that contains the the checkerboard and pieces
+	private JLayeredPane layeredPanecheckerBoard = new JLayeredPane(); // ane that contains the the checkerboard and pieces
 	private AudioPlayer bjMusic;
 	
 	//Icons 
@@ -99,7 +102,7 @@ public class CheckersBoard extends JPanel implements MouseListener {
 	
 	//Instance variable for the chekers board
 	private CheckersData checkerBoard = new CheckersData();
-	private JButton btnMusic = new JButton(musicofficon);
+	private JButton buttonMusic = new JButton(musicofficon);
 	
 	
 	
@@ -108,442 +111,442 @@ public class CheckersBoard extends JPanel implements MouseListener {
 	
 
 	/**
-	 * Create the panel.
-	 * @throws IOException 
-	 * @throws UnknownHostException 
+	 * Create the board panel. 
 	 */
-// 	 @param number of the player 
+
 	public CheckersBoard()  {
 	
-		bjMusic =  new AudioPlayer ("Ocarina song of time.mp3");
-// if player is an even # then myturn variable is true other wise is false
-	
-		
+	bjMusic =  new AudioPlayer ("Ocarina song of time.mp3");
 	
       
-		setBackground(new Color(160, 82, 45));
-		Icon backgroundicon = new ImageIcon(getClass().getResource("background4.png"));
-		setPreferredSize(new Dimension(backgroundicon.getIconWidth(), backgroundicon.getIconHeight()));
+	setBackground(new Color(160, 82, 45));
+	Icon backgroundicon = new ImageIcon(getClass().getResource("background4.png"));
+	setPreferredSize(new Dimension(backgroundicon.getIconWidth(), backgroundicon.getIconHeight()));
 
-		JLayeredPane layeredPane = new JLayeredPane();
-		add(layeredPane);
-		layeredPane.setPreferredSize(new Dimension(backgroundicon.getIconWidth(), backgroundicon.getIconHeight()));
-
-
-
-		Icon checkersboardicon = new ImageIcon(getClass().getResource("checkersboard3.png"));
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(139, 69, 19));
+	JLayeredPane layeredPane = new JLayeredPane();
+	add(layeredPane);
+	layeredPane.setPreferredSize(new Dimension(backgroundicon.getIconWidth(), backgroundicon.getIconHeight()));
 
 
-		panel.setBounds(195, 39,720, 608);
-		layeredPane.add(panel, new Integer(300));
 
-		//checkers board layered panel
+	Icon checkersboardicon = new ImageIcon(getClass().getResource("checkersboard3.png"));
+	JPanel panel = new JPanel();
+	panel.setBackground(new Color(139, 69, 19));
 
-		
-		panel.add(layeredPanecheckerBoard);
-		layeredPanecheckerBoard.setPreferredSize(new Dimension(checkersboardicon.getIconWidth(), checkersboardicon.getIconHeight()));
 
-		JLabel labelcheckerboard = new JLabel(checkersboardicon);
-		labelcheckerboard.setBounds(0, 0, checkersboardicon.getIconWidth(), checkersboardicon.getIconHeight());
-		layeredPanecheckerBoard.add(labelcheckerboard);
-		layeredPanecheckerBoard.addMouseListener(this);
-		
-	//esto es para inicializar los pieces. 
-		
-		int a=0, b=0;
-		for (int j=0; j<12;j++){
+	panel.setBounds(195, 39,720, 608);
+	layeredPane.add(panel, new Integer(300));
 
-			blackpieces[j] = new JLabel();
-			blackpieces[j].setIcon(blackpiecesicon);  
-			blackpieces[j].setBounds(getxPixels(b), getyPixels(a), blackpiecesicon.getIconWidth(), blackpiecesicon.getIconHeight());
+	
+	panel.add(layeredPanecheckerBoard);
+	layeredPanecheckerBoard.setPreferredSize(new Dimension(checkersboardicon.getIconWidth(), checkersboardicon.getIconHeight()));
 
-			layeredPanecheckerBoard.add(blackpieces[j], new Integer(300));
-			
-			a=a+2;
-			if (a>6 && b==0){
-				a=1;
-				b=1;
-			}
-			if (a>7 && b==1){
-				a=0;
-				b=2;
-			}
-		}
+	JLabel labelcheckerboard = new JLabel(checkersboardicon);
+	labelcheckerboard.setBounds(0, 0, checkersboardicon.getIconWidth(), checkersboardicon.getIconHeight());
+	layeredPanecheckerBoard.add(labelcheckerboard);
+	layeredPanecheckerBoard.addMouseListener(this);
+	
+	//  Intialize the checker pieces. 
+	
+	int a=0, b=0;
+	for (int j=0; j<12;j++){
 
-		a=1;  //si es necesario comenzar en 1 o
-		b=5;
-		for (int j=0; j<12;j++){
+	blackpieces[j] = new JLabel();
+	blackpieces[j].setIcon(blackpiecesicon);  
+	blackpieces[j].setBounds(getxPixels(b), getyPixels(a), blackpiecesicon.getIconWidth(), blackpiecesicon.getIconHeight());
 
-			redpieces[j] = new JLabel();
-			redpieces[j].setIcon(redpiecesicon);  
-			redpieces[j].setBounds(getxPixels(b), getyPixels(a), redpiecesicon.getIconWidth(), redpiecesicon.getIconHeight());
-			layeredPanecheckerBoard.add(redpieces[j], new Integer(300));
-			a=a+2;
-			if (a>7 && b==5){
-				a=0;
-				b=6;
-			}
-			if (a>6 && b==6){
-				a=1;
-				b=7;
-			}
-		}
+	layeredPanecheckerBoard.add(blackpieces[j], new Integer(300));
+	
+	a=a+2;
+	if (a>6 && b==0){
+	a=1;
+	b=1;
+	}
+	if (a>7 && b==1){
+	a=0;
+	b=2;
+	}
+	}
 
-		// end of panel of checkers board layered panel 
-		//System.out.println(blackpieces[0].getBounds().x);
-		
-		
-		JLabel labelPlayer1 = new JLabel("Player1");
-		labelPlayer1.setFont(new Font("Lucida Bright", Font.PLAIN, 22));
-		labelPlayer1.setForeground(Color.WHITE);
-		labelPlayer1.setBounds(966, 15, 109, 35);
-		layeredPane.add(labelPlayer1, new Integer(300));
+	a=1;  //si es necesario comenzar en 1 
+	b=5;
+	for (int j=0; j<12;j++){
+
+	redpieces[j] = new JLabel();
+	redpieces[j].setIcon(redpiecesicon);  
+	redpieces[j].setBounds(getxPixels(b), getyPixels(a), redpiecesicon.getIconWidth(), redpiecesicon.getIconHeight());
+	layeredPanecheckerBoard.add(redpieces[j], new Integer(300));
+	a=a+2;
+	if (a>7 && b==5){
+	a=0;
+	b=6;
+	}
+	if (a>6 && b==6){
+	a=1;
+	b=7;
+	}
+	}
+
+	// end of panel of checkers board layered panel 
+
+	
+	JLabel labelPlayer1 = new JLabel("Player1");
+	labelPlayer1.setFont(new Font("Lucida Bright", Font.PLAIN, 22));
+	labelPlayer1.setForeground(Color.WHITE);
+	labelPlayer1.setBounds(966, 15, 109, 35);
+	layeredPane.add(labelPlayer1, new Integer(300));
 	
 
 
-		JLabel labelPlayer2 = new JLabel("Player2");
-		labelPlayer2.setForeground(Color.WHITE);
-		labelPlayer2.setFont(new Font("Lucida Bright", Font.PLAIN, 22));
-		labelPlayer2.setBounds(23, 19, 115, 27);
-		layeredPane.add(labelPlayer2, new Integer(300));
-		
-		
-		turns.setForeground(Color.WHITE);
-		turns.setFont(new Font("Lucida Bright", Font.PLAIN, 22));
-		turns.setBounds(456, 0, 139, 27);
-		layeredPane.add(turns);
+	JLabel labelPlayer2 = new JLabel("Player2");
+	labelPlayer2.setForeground(Color.WHITE);
+	labelPlayer2.setFont(new Font("Lucida Bright", Font.PLAIN, 22));
+	labelPlayer2.setBounds(23, 19, 115, 27);
+	layeredPane.add(labelPlayer2, new Integer(300));
+	
+	
+	turns.setForeground(Color.WHITE);
+	turns.setFont(new Font("Lucida Bright", Font.PLAIN, 22));
+	turns.setBounds(429, 0, 260, 27);
+	layeredPane.add(turns);
 
-		JLabel labelTime = new JLabel("Time Remaining:");
-		labelTime.setFont(new Font("Lucida Blackletter", Font.PLAIN, 15));
-		labelTime.setForeground(Color.WHITE);
-		labelTime.setBounds(23, 81, 115, 27);
-		layeredPane.add(labelTime);
+	JLabel labelTime = new JLabel("Time Remaining:");
+	labelTime.setFont(new Font("Lucida Blackletter", Font.PLAIN, 15));
+	labelTime.setForeground(Color.WHITE);
+	labelTime.setBounds(23, 81, 115, 27);
+	layeredPane.add(labelTime);
 
-		JLabel labelTimeRemainingn = new JLabel("Time Remaining: ");
-		labelTimeRemainingn.setForeground(Color.WHITE);
-		labelTimeRemainingn.setFont(new Font("Lucida Blackletter", Font.PLAIN, 15));
-		labelTimeRemainingn.setBounds(944, 87, 131, 27);
-		layeredPane.add(labelTimeRemainingn);
-		
-		
-		btnMusic.setBounds(50, 600, 58, 29);
+	JLabel labelTimeRemaining = new JLabel("Time Remaining: ");
+	labelTimeRemaining.setForeground(Color.WHITE);
+	labelTimeRemaining.setFont(new Font("Lucida Blackletter", Font.PLAIN, 15));
+	labelTimeRemaining.setBounds(944, 87, 131, 27);
+	layeredPane.add(labelTimeRemaining);
+	
+	
+	buttonMusic.setBounds(50, 600, 58, 29);
+	buttonMusic.addActionListener(new ActionListener(){
 
-
-		btnMusic.addActionListener(new ActionListener(){
-
-			public void actionPerformed(ActionEvent e) {
-				if (AudioPlayer.clip.isRunning()){
-					btnMusic.setIcon(musiconicon);
-					bjMusic.stop();
-				}
-				else {
-					btnMusic.setIcon(musicofficon);
-					bjMusic.play();
-				}
-			}
-		});
-
-		layeredPane.add(btnMusic);
+	public void actionPerformed(ActionEvent e) {
+	if (AudioPlayer.clip.isRunning()){
+	buttonMusic.setIcon(musiconicon);
+	bjMusic.stop();
+	}
+	else {
+	buttonMusic.setIcon(musicofficon);
+	bjMusic.play();
+	}
+	}
+	});
+	layeredPane.add(buttonMusic);
 
 
-		labeltimerplayer2.setForeground(Color.WHITE);
-		labeltimerplayer2.setFont(new Font("Lucida Blackletter", Font.PLAIN, 20));
-		labeltimerplayer2.setBounds(33, 120, 91, 22);
-		layeredPane.add(labeltimerplayer2);
+	labeltimerplayer2.setForeground(Color.WHITE);
+	labeltimerplayer2.setFont(new Font("Lucida Blackletter", Font.PLAIN, 20));
+	labeltimerplayer2.setBounds(33, 120, 91, 22);
+	layeredPane.add(labeltimerplayer2);
 
-		labeltimerplayer1.setForeground(Color.WHITE);
-		labeltimerplayer1.setFont(new Font("Lucida Blackletter", Font.PLAIN, 20));
-		labeltimerplayer1.setBounds(983, 115, 92, 27);
-		layeredPane.add(labeltimerplayer1);
-
-
-		//time.start();  // acivate every time is the first players turn
-		
+	labeltimerplayer1.setForeground(Color.WHITE);
+	labeltimerplayer1.setFont(new Font("Lucida Blackletter", Font.PLAIN, 20));
+	labeltimerplayer1.setBounds(983, 115, 92, 27);
+	layeredPane.add(labeltimerplayer1);
+	labelIam.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+	labelIam.setForeground(Color.WHITE);
+	
+	
+	
+	labelIam.setBounds(533, 650, 122, 16);
+	layeredPane.add(labelIam);
+	
+	labelScorePlayer2.setForeground(Color.WHITE);
+	labelScorePlayer2.setFont(new Font("Lucida Blackletter", Font.PLAIN, 18));
+	labelScorePlayer2.setBounds(31, 172, 115, 27);
+	layeredPane.add(labelScorePlayer2);
 
 	
-		labelScorePlayer2.setForeground(Color.WHITE);
-		labelScorePlayer2.setFont(new Font("Lucida Blackletter", Font.PLAIN, 18));
-		labelScorePlayer2.setBounds(31, 172, 115, 27);
-		layeredPane.add(labelScorePlayer2);
+	labelScorePlayer1.setForeground(Color.WHITE);
+	labelScorePlayer1.setFont(new Font("Lucida Blackletter", Font.PLAIN, 18));
+	labelScorePlayer1.setBounds(944, 172, 115, 27);
+	layeredPane.add(labelScorePlayer1);
 
-	
-		labelScorePlayer1.setForeground(Color.WHITE);
-		labelScorePlayer1.setFont(new Font("Lucida Blackletter", Font.PLAIN, 18));
-		labelScorePlayer1.setBounds(944, 172, 115, 27);
-		layeredPane.add(labelScorePlayer1);
-
-		JLabel labelbackground = new JLabel(backgroundicon);
-		labelbackground.setBounds(0, 0, backgroundicon.getIconWidth(), backgroundicon.getIconHeight());
-		layeredPane.add(labelbackground);
-
-
-
-
+	JLabel labelbackground = new JLabel(backgroundicon);
+	labelbackground.setBounds(0, 0, backgroundicon.getIconWidth(), backgroundicon.getIconHeight());
+	layeredPane.add(labelbackground);
 	}
 	
 	
 	
 	public void setShape(String shape){
-		
 	
-		
-		if (shape == "Stars"){
-		
+	
+	
+	if (shape == "Stars"){
+	
 
-				blackpiecesicon.setImage(blackpiecesstars.getImage());
-				redpiecesicon.setImage(redpiecesstars.getImage());
-				blackselected.setImage(blackstarselect.getImage());
+	blackpiecesicon.setImage(blackpiecesstars.getImage());
+	redpiecesicon.setImage(redpiecesstars.getImage());
+	blackselected.setImage(blackstarselect.getImage());
                redselected.setImage(redstarselect.getImage());
 
-		}
-		else if (shape == "Circles"){
-			
-			redpiecesicon.setImage(redpiecescircle.getImage());
-			blackpiecesicon.setImage(blackpiecescircle.getImage());
-			blackselected.setImage(blackcircleselected.getImage());
+	}
+	else if (shape == "Circles"){
+	
+	redpiecesicon.setImage(redpiecescircle.getImage());
+	blackpiecesicon.setImage(blackpiecescircle.getImage());
+	blackselected.setImage(blackcircleselected.getImage());
            redselected.setImage(redcircleselected.getImage());
 
-		}
-		else if (shape == "Machinery Pieces"){
-			
-			redpiecesicon.setImage(redpiecesmachinery.getImage());
-			blackpiecesicon.setImage(blackpiecesmachinery.getImage());
-			blackselected.setImage(blackmachineryselect.getImage());
+	}
+	else if (shape == "Machinery Pieces"){
+	
+	redpiecesicon.setImage(redpiecesmachinery.getImage());
+	blackpiecesicon.setImage(blackpiecesmachinery.getImage());
+	blackselected.setImage(blackmachineryselect.getImage());
            redselected.setImage(redmachineryselect.getImage());
-		}
-		
+	}
+	
 	}
 	
 	public void myturn (){
-		IntroCheckers.client.checkplayer();
-		boolean done =false;
-		for (int i=0; i<=799999999 ; i++){
-			if (i==799999998){
-				done = true;
-			}
-		}
-		try{
-			Thread.sleep(1000);
-			
-		}
-		catch(InterruptedException ex){
-			Thread.currentThread().interrupt();
-		}
-			if (done){
-		System.out.println("chckerboard myturnfirst()"+myindex);
-			myindex= IntroCheckers.client.getIndex();
-			System.out.println("chckerboard myturnsecond()"+myindex);
-			if (myindex%2 == 0){
-				 // este es el timer de verificar si hay dos players 
-				bothready= false; 
-				myturn = true;
-				indextimer.start();
-				time.stop();
-				
-			}
-			else {
-				myturn =  false;
-				time.start(); // este es el timer del rojo 
-				bothready= true; 
-			
-			}
-			}
+	IntroCheckers.client.checkplayer();
+	
 
-		
-		
+	try{
+	Thread.sleep(1000);
+	
+	}
+	catch(InterruptedException ex){
+	Thread.currentThread().interrupt();
+	}
+
+	System.out.println("chckerboard myturnfirst()"+myindex);
+	myindex= IntroCheckers.client.getIndex();
+	System.out.println("chckerboard myturnsecond()"+myindex);
+	if (myindex%2 == 0){
+	 // este es el timer de verificar si hay dos players 
+	bothready= false; 
+	myturn = true;
+	turns.setText("My Turn");
+	labelIam.setText("I am Red");
+	indextimer.start();
+	time.stop();
+	
+	}
+	else {
+	myturn =  false;
+	turns.setText("Other's Player Turn");
+	labelIam.setText("I am Black");
+	time.start(); // este es el timer del rojo 
+	bothready= true; 
+	
+	}
+	//	}
+
+	
+	
 	}
 	
-
+/*
+ * Move piece from player's GUI. 
+ * @param fromRow
+ * @param  fromCol
+ * @param to Row
+ * @param to Col 
+ */
 	
 	
-	public void moveGUI(int squarey1, int squarex1, int squarey2, int squarex2 ){
+	public void moveGUI(int fromRow, int fromCol, int toRow, int toCol ){
 
-		int i=0;
-		if (redturn){
-			
-			i= getRedPiece(squarex1,squarey1);
-	        redpieces[i].setBounds(getxPixels(squarex2), getyPixels(squarey2), redpiecesicon.getIconWidth(), redpiecesicon.getIconHeight());
+	int i=0;
+	if (redturn){
+	
+	i= getRedPiece(fromCol,fromRow);
+	        redpieces[i].setBounds(getxPixels(toCol), getyPixels(toRow), redpiecesicon.getIconWidth(), redpiecesicon.getIconHeight());
 	        redpieces[i].setIcon(redpiecesicon);
 	    	redturn=false;
-	    	turns.setText("Blacks Turn");
+	    	
 	    	time2.start(); 
-			time.stop();
-			
-			if(myturn == false && squarex1 - 2 == squarex2){
-				scorePlayer1 +=1;
-				labelScorePlayer1.setText("Score:" + scorePlayer1);
-				//removing from the GUI 
-				int j =0;
+	time.stop();
 	
-				 j = getBlackPiece(checkerBoard.getMiddleCol(squarey1, squarex1, squarey2, squarex2),checkerBoard.getMiddleRow(squarey1, squarex1, squarey2, squarex2));
-				 blackpieces[j].setBounds(0, 0, 0, 0);
-				 layeredPanecheckerBoard.remove(blackpieces[j]);
-				  //removing from the array
-				 checkerBoard.remove(checkerBoard.getMiddleRow(squarey1, squarex1, squarey2, squarex2), checkerBoard.getMiddleCol(squarey1, squarex1, squarey2, squarex2));
-				
-			}
-		}
-		else { 
+	if(myturn == false && fromCol - 2 == toCol){
+	
+	turns.setText("Other's Player Turn");
+	scorePlayer1 +=1;
+	labelScorePlayer1.setText("Score:" + scorePlayer1);
+	//removing the piece from the GUI 
+	int j =0;
+	
+	 j = getBlackPiece(checkerBoard.getMiddleCol(fromRow, fromCol, toRow, toCol),checkerBoard.getMiddleRow(fromRow, fromCol, toRow, toCol));
+	 blackpieces[j].setBounds(0, 0, 0, 0);
+	 layeredPanecheckerBoard.remove(blackpieces[j]);
+	  //removing piece from the array
+	 checkerBoard.remove(checkerBoard.getMiddleRow(fromRow, fromCol, toRow, toCol), checkerBoard.getMiddleCol(fromRow, fromCol, toRow, toCol));
+	
+	}
+	}
+	else { 
 	    i=0;
-		i= getBlackPiece(squarex1,squarey1);
-		blackpieces[i].setIcon(blackpiecesicon);
-		blackpieces[i].setBounds( getxPixels(squarex2), getyPixels(squarey2), blackpiecesicon.getIconWidth(),blackpiecesicon.getIconHeight());
-		redturn=true;
-		turns.setText("Reds Turn");
-		time2.stop();
-		time.start();
-		if(myturn == false && squarex1 + 2 == squarex2){
-			scorePlayer2 +=1;
-			labelScorePlayer2.setText("Score:" + scorePlayer2);
-			int j =0;
-		    j = getRedPiece(checkerBoard.getMiddleCol(squarey1, squarex1, squarey2, squarex2),checkerBoard.getMiddleRow(squarey1, squarex1, squarey2, squarex2));
-		    redpieces[j].setBounds(0, 0, 0, 0);
-		    layeredPanecheckerBoard.remove(redpieces[j]);
-		    //removing from the array
-		 checkerBoard.remove(checkerBoard.getMiddleRow(squarey1, squarex1, squarey2, squarex2), checkerBoard.getMiddleCol(squarey1, squarex1, squarey2, squarex2));
-			
-		}
-		}
-		checkerBoard.moveTo(squarey1, squarex1, squarey2, squarex2);
+	i= getBlackPiece(fromCol,fromRow);
+	blackpieces[i].setIcon(blackpiecesicon);
+	blackpieces[i].setBounds( getxPixels(toCol), getyPixels(toRow), blackpiecesicon.getIconWidth(),blackpiecesicon.getIconHeight());
+	redturn=true;
+	time2.stop();
+	time.start();
+	if(myturn == false && fromCol + 2 == toCol){
+	turns.setText("My Turn");
+	scorePlayer2 +=1;
+	labelScorePlayer2.setText("Score:" + scorePlayer2);
+	int j =0;
+	    j = getRedPiece(checkerBoard.getMiddleCol(fromRow, fromCol, toRow, toCol),checkerBoard.getMiddleRow(fromRow, fromCol, toRow, toCol));
+	    redpieces[j].setBounds(0, 0, 0, 0);
+	    layeredPanecheckerBoard.remove(redpieces[j]);
+	    //removing from the array
+	 checkerBoard.remove(checkerBoard.getMiddleRow(fromRow, fromCol, toRow, toCol), checkerBoard.getMiddleCol(fromRow, fromCol, toRow, toCol));
+	
+	}
+	
+	
+	
+	
+	
+	}
+	checkerBoard.moveTo(fromRow, fromCol, toRow, toCol);
+	
+	turns.setText("My Turn");
         myturn = true;
         
         
 	}
 	
 	public int getBlackPiece(int col,int row){
-		 
-		int x= getxPixels(col), y= getyPixels(row);
-		//Rectangle verify = new Rectangle (3,3,65,65);
-		for (int j=0; j<12;j++){
+	 
+	int x= getxPixels(col), y= getyPixels(row);
+	//Rectangle verify = new Rectangle (3,3,65,65);
+	for (int j=0; j<12;j++){
 
             	if (blackpieces[j].getBounds().x ==x && blackpieces[j].getBounds().y==y)
             	{
-            		return j;
+            	return j;
             	}
             }
-			
+	
             
         	return 0;
-		}
-		
+	}
+	
 	public int getRedPiece(int col,int row){
-		 
-		int x= getxPixels(col), y= getyPixels(row);
-		//Rectangle verify = new Rectangle (3,3,65,65);
-		for (int j=0; j<12;j++){
+	 
+	int x= getxPixels(col), y= getyPixels(row);
+	//Rectangle verify = new Rectangle (3,3,65,65);
+	for (int j=0; j<12;j++){
 
             	if (redpieces[j].getBounds().x ==x && redpieces[j].getBounds().y==y)
             	{
-            		return j;
+            	return j;
             	}
             }
-			
+	
             
         	return 0;
-		}
-		
+	}
+	
 	
 	
 	
 	/*
-	 * gets the square x (col)
-	 * @param the pixels of x   (remember is respect to the checkers panel layered panel which is the chekers panel)
-	 * 	  @return x square position
+	 * Gets the square Col location
+	 * @param col2 -- The pixels of the Col   
+	 * @return col-- The col square position
 	 */
 	public int getxSquare(int col2){
-		int col=0;
-		int a=0, b=75;
+	int col=0;
+	int a=0, b=75;
 
-		for (int i =0; i<8; i++){
+	for (int i =0; i<8; i++){
 
 
-			if (col2 >= a && col2<= b){
+	if (col2 >= a && col2<= b){
 
-				col = i ;
-			}
-			a=b;
-			b+= 74;
+	col = i ;
+	}
+	a=b;
+	b+= 74;
 
-		}
-		return col;
+	}
+	return col;
 
 	}
 	/*
-	 * gets the square y   (row)
-	 * @param the pixels  of y (remember is respect to the checkers panel layered panel which is the checkers panel)\
-	 * @return y square position 
+	 * Gets the square Row location.
+	 * @param row2 -- The pixels of the Row   
+	 * @return row -- The Row square position
 	 */
 	public  int getySquare(int row2){
 
-		int  row=0;
-		int a=0;
-		int  b=75;
-		for (int i =0; i<8; i++){
+	int  row=0;
+	int a=0;
+	int  b=75;
+	for (int i =0; i<8; i++){
 
 
-			if (row2 >= a && row2<= b){
+	if (row2 >= a && row2<= b){
 
-				row = i ;
-			}
-			a=b;
-			b+= 75;
+	row = i ;
+	}
+	a=b;
+	b+= 75;
 
-		}
+	}
 
-		return row;
+	return row;
 
 	}
 	/*
-	 * this class if convienient for the movement and the redrawings
-	 * gets the square x pixels (col)  t
-	 * @param the square of x   (remember is respect to the checkers panel layered panel which is the chekers panel)
-		 * @return the pixels of the left most part of the square  x position 
+	 * Gets the square Col pixels 
+	 * @param squarex --The Col square   (remember is respect to the checkers panel layered panel which is the chekers panel)
+     * @return xpixel -- The pixels of the left most part of the square 
 	 */
 	public int getxPixels(int squarex){
 
-		int a=3;
+	int xpixel=3;
 
-		for (int i =0; i<8; i++){
+	for (int i =0; i<8; i++){
 
 
-			if (squarex==i){
+	if (squarex==i){
 
-				return a;
-			}
+	return xpixel;
+	}
 
-			a+= 74;
+	xpixel+= 74;
 
-		}
-		return a;
+	}
+	return xpixel;
 
 
 	}
 	
 	/*
-	 * this class if convienient for the movement and the redrawings
-	 * gets the square y pixels (row)  
-	 * @param the square of y   (remember is respect to the checkers panel layered panel which is the chekers panel)
-	 * @return the pixels of the left most part of the square y position 
+	 * Gets the square Row pixels 
+	 * @param The Row square   (remember is respect to the checkers panel layered panel which is the chekers panel)
+     * @return ypixel -- The pixels of the top most part of the square 
 	 */
 
 	public  int getyPixels(int squarey){
 
-		int a=3;
+	int ypixel=3;
 
-		for (int i =0; i<8; i++){
+	for (int i =0; i<8; i++){
 
 
-			if (squarey==i){
+	if (squarey==i){
 
-				return a;
-			}
+	return ypixel;
+	}
 
-			a+= 75;
+	ypixel+= 75;
 
-		}
-		return a;
+	}
+	return ypixel;
 
 
 	}
@@ -552,189 +555,186 @@ public class CheckersBoard extends JPanel implements MouseListener {
 
 	public void mousePressed(MouseEvent e) {
 	
-		if (gameRunning){
-			int col2 = e.getX();
-			int row2 = e.getY();
-			int squarey= getySquare(row2);  /// this will be the variables that will be checked to verify of there is something or if the move is valid
-			int squarex= getxSquare(col2);    /// this will be the variables that will be checked to verify of there is something or if the move is valid
-//			System.out.println(squarex+"-"+ squarey);
-			// x = colums y= rows
-			if (firstclick && myturn && bothready){
+	if (gameRunning){
+	int col2 = e.getX();
+	int row2 = e.getY();
+	int squarey= getySquare(row2);  /// this will be the variables that will be checked to verify of there is something or if the move is valid
+	int squarex= getxSquare(col2);    /// this will be the variables that will be checked to verify of there is something or if the move is valid
 
-			if (checkerBoard.thereIs(squarey, squarex)==1 && redturn== false){
-				squarex1= squarex;
-				squarey1= squarey;
-				
-				
-					int i=0;
-					i= getBlackPiece(squarex1,squarey1);
-					blackpieces[i].setIcon(blackselected);
-				    firstclick = false;
-				
-			}
-			
-			else if (checkerBoard.thereIs(squarey, squarex)==3 && redturn){
-				squarex1= squarex;
-				squarey1= squarey;
-				
-				int i=0;
-				i= getRedPiece(squarex1,squarey1);
-		        redpieces[i].setIcon(redselected);
-		
+	if (firstclick && myturn && bothready){
+
+	if (checkerBoard.thereIs(squarey, squarex)==1 && redturn== false){
+	squarex1= squarex;
+	squarey1= squarey;
 	
-				firstclick = false;
-			}
-//
-			}//end of first click
-			
-			else if (firstclick == false){   //this is the second click
-			
-				if (checkerBoard.legalMove(squarey1, squarey, squarex1, squarex))
-				{
-					squarex2= squarex;
-					squarey2 = squarey;
-				
-					if (checkerBoard.thereIs(squarey1, squarex1)==1){
-
-				moveGUI(squarey1, squarex1, squarey2, squarex2);
-				myturn = false;
-				//redturn=true;
-					}  
-					
-					else if (checkerBoard.thereIs(squarey1, squarex1)==3){
-
-				moveGUI(squarey1, squarex1, squarey2, squarex2);
-				myturn = false;
-				
-					}
-					
-					//checkerBoard.moveTo(squarey1, squarex1, squarey2, squarex2);
-					
-			
-					try {
-
-						Client.sendMove(squarey1, squarex1, squarey2, squarex2);
-					
-						
-					} catch (UnknownHostException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}	
-					
-					firstclick = true;	
-				}
-				
-				//estos dos  if de abajo es por si el jugador se arrepiente y vuelve a dar click en una de sus piezas 
-				//pues que esa pieza la trate como i fuera su primer click
-				else if (checkerBoard.thereIs(squarey, squarex)==1 & redturn==false)
-				{
-					int i=0;
-					i= getBlackPiece(squarex1,squarey1);
-					blackpieces[i].setIcon(blackpiecesicon);
-					squarex1= squarex;
-					squarey1= squarey;
-					i= getBlackPiece(squarex1,squarey1);
-					blackpieces[i].setIcon(blackselected);
-				}
-				else if (checkerBoard.thereIs(squarey, squarex)==3 & redturn)
-				{
-					
-					int i=0;
-					i= getRedPiece(squarex1,squarey1);
-					redpieces[i].setIcon(redpiecesicon);
-					squarex1= squarex;
-					squarey1= squarey;
-					i= getRedPiece(squarex1,squarey1);
-					redpieces[i].setIcon(redselected);
-				}
-				
-				
-				//este es el if que vamos a usar para comer
-				
-				else if (checkerBoard.canJump(squarey1, squarex1, squarey, squarex)){
-					
-					
-				squarex2= squarex;
-				squarey2 = squarey;
-
-				if (checkerBoard.thereIs(squarey1, squarex1)==1){
-				moveGUI(squarey1, squarex1, squarey2, squarex2);
-				
-				try {
-
-					Client.sendMove(squarey1, squarex1, squarey2, squarex2);
-				
-					
-				} catch (UnknownHostException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
 	
-				//removing from the GUI 
-			     int j =0;
-			    j = getRedPiece(CheckersData.midcol,CheckersData.midrow);
-			    redpieces[j].setBounds(0, 0, 0, 0);
-			    layeredPanecheckerBoard.remove(redpieces[j]);
-			    //removing from the array
-			 checkerBoard.remove(CheckersData.midrow, CheckersData.midcol);
+	int i=0;
+	i= getBlackPiece(squarex1,squarey1);
+	blackpieces[i].setIcon(blackselected);
+	    firstclick = false;
 	
-			 scorePlayer2++;
-			 labelScorePlayer2.setText("Score:" + scorePlayer2);
-//			
-				}  
-				
-				else if (checkerBoard.thereIs(squarey1, squarex1)==3){
+	}
+	
+	else if (checkerBoard.thereIs(squarey, squarex)==3 && redturn){
+	squarex1= squarex;
+	squarey1= squarey;
+	
+	int i=0;
+	i= getRedPiece(squarex1,squarey1);
+	        redpieces[i].setIcon(redselected);
+	
+	
+	firstclick = false;
+	}
 
-			moveGUI(squarey1, squarex1, squarey2, squarex2);
-			
-			try {
+	}//end of first click
+	
+	else if (firstclick == false){   //this is the second click
+	
+	if (checkerBoard.legalMove(squarey1, squarey, squarex1, squarex))
+	{
+	squarex2= squarex;
+	squarey2 = squarey;
+	
+	if (checkerBoard.thereIs(squarey1, squarex1)==1){
 
-				Client.sendMove(squarey1, squarex1, squarey2, squarex2);
-			
-				
-			} catch (UnknownHostException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		
-			
-			//removing from the GUI 
-			int j =0;
-			 j = getBlackPiece(CheckersData.midcol,CheckersData.midrow);
-			 blackpieces[j].setBounds(0, 0, 0, 0);
-			 layeredPanecheckerBoard.remove(blackpieces[j]);
-			 
-			 
-			  //removing from the array
-			 checkerBoard.remove(CheckersData.midrow, CheckersData.midcol);
-			 scorePlayer1++;
-			 labelScorePlayer1.setText("Score:" + scorePlayer1);
-				
-		
-				}
-				
-				//checkerBoard.moveTo(squarey1, squarex1, squarey2, squarex2);
-				firstclick = true;
-				myturn = false;
-				
-				}    //end of jump 
-			
-			}  // end of second click 
-		
+	moveGUI(squarey1, squarex1, squarey2, squarex2);
+	myturn = false;
+	
+	}  
+	
+	else if (checkerBoard.thereIs(squarey1, squarex1)==3){
+
+	moveGUI(squarey1, squarex1, squarey2, squarex2);
+	myturn = false;
+	
+	}
+	
+	
+	try {
+
+	Client.sendMove(squarey1, squarex1, squarey2, squarex2);
+	
+	
+	} catch (UnknownHostException e1) {
+	
+	e1.printStackTrace();
+	} catch (IOException e1) {
+	
+	e1.printStackTrace();
+	}	
+	
+	firstclick = true;	
+	turns.setText("Other's Player Turn");
+	}
+	
+	//estos dos  if de abajo es por si el jugador se arrepiente y vuelve a dar click en una de sus piezas 
+	//pues que esa pieza la trate como i fuera su primer click
+	else if (checkerBoard.thereIs(squarey, squarex)==1 & redturn==false)
+	{
+	int i=0;
+	i= getBlackPiece(squarex1,squarey1);
+	blackpieces[i].setIcon(blackpiecesicon);
+	squarex1= squarex;
+	squarey1= squarey;
+	i= getBlackPiece(squarex1,squarey1);
+	blackpieces[i].setIcon(blackselected);
+	}
+	else if (checkerBoard.thereIs(squarey, squarex)==3 & redturn)
+	{
+	
+	int i=0;
+	i= getRedPiece(squarex1,squarey1);
+	redpieces[i].setIcon(redpiecesicon);
+	squarex1= squarex;
+	squarey1= squarey;
+	i= getRedPiece(squarex1,squarey1);
+	redpieces[i].setIcon(redselected);
+	}
+	
+	
+	//for eating 
+	
+	else if (checkerBoard.canJump(squarey1, squarex1, squarey, squarex)){
+	
+	
+	squarex2= squarex;
+	squarey2 = squarey;
+
+	if (checkerBoard.thereIs(squarey1, squarex1)==1){
+	moveGUI(squarey1, squarex1, squarey2, squarex2);
+	
+	try {
+
+	Client.sendMove(squarey1, squarex1, squarey2, squarex2);
+	
+	
+	} catch (UnknownHostException e1) {
+	
+	e1.printStackTrace();
+	} catch (IOException e1) {
+	
+	e1.printStackTrace();
+	}
+	
+	//removing piece from the GUI 
+	     int j =0;
+	    j = getRedPiece(CheckersData.midcol,CheckersData.midrow);
+	    redpieces[j].setBounds(0, 0, 0, 0);
+	    layeredPanecheckerBoard.remove(redpieces[j]);
+	    //removing piece from the array
+	 checkerBoard.remove(CheckersData.midrow, CheckersData.midcol);
+	
+	 scorePlayer2++;
+	 labelScorePlayer2.setText("Score:" + scorePlayer2);
+//	
+	}  
+	
+	else if (checkerBoard.thereIs(squarey1, squarex1)==3){
+
+	moveGUI(squarey1, squarex1, squarey2, squarex2);
+	
+	try {
+
+	Client.sendMove(squarey1, squarex1, squarey2, squarex2);
+	
+	
+	} catch (UnknownHostException e1) {
+	
+	e1.printStackTrace();
+	} catch (IOException e1) {
+	
+	e1.printStackTrace();
+	}
+	
+	
+	//removing piece from the GUI 
+	int j =0;
+	 j = getBlackPiece(CheckersData.midcol,CheckersData.midrow);
+	 blackpieces[j].setBounds(0, 0, 0, 0);
+	 layeredPanecheckerBoard.remove(blackpieces[j]);
+	 
+	 
+	  //removing piece from the array
+	 checkerBoard.remove(CheckersData.midrow, CheckersData.midcol);
+	 scorePlayer1++;
+	 labelScorePlayer1.setText("Score:" + scorePlayer1);
+	
+	
+	}
+	
+	
+	firstclick = true;
+	myturn = false;
+	turns.setText("Other's Player Turn");
+	
+	}    //end of jump 
+	
+	}  // end of second click 
+	
 	  
-		}
-		else {
-             // Do not do anything because game is not running or is not your turn
-		}
+	}
+	
 	}
 
 
@@ -744,103 +744,89 @@ public class CheckersBoard extends JPanel implements MouseListener {
 	public void mouseExited(MouseEvent evt) { }
 
 /*
- * class for timer of each timer 
+ * Class for actionlistener of each timer 
  */
 
 	public class Timer2 implements ActionListener{
 
 
-		public void actionPerformed(ActionEvent e) {
-			
-			if (gameRunning){
+	public void actionPerformed(ActionEvent e) {
 	
-			if (e.getSource().equals(time)){
-				secondsfirstplayer--;
-			
-				if (secondsfirstplayer==0 && minutesfirstplayer>=0){
-					minutesfirstplayer--;
-					secondsfirstplayer=59;
-				}
-				
-				 if (minutesfirstplayer<0){
-					 
-					//aqui podemos poner que cree un Frame que diga que el otro jugador gan�
-					minutesfirstplayer=0;
-					secondsfirstplayer=0;
-					gameRunning=false;
-				}
-				
-				String s4 = String.valueOf(minutesfirstplayer);
-				String s3 = String.valueOf(secondsfirstplayer); 
+	if (gameRunning){
+	
+	if (e.getSource().equals(time)){
+	secondsfirstplayer--;
+	
+	if (secondsfirstplayer==0 && minutesfirstplayer>=0){
+	minutesfirstplayer--;
+	secondsfirstplayer=59;
+	}
+	
+	 if (minutesfirstplayer<0){
+	 
+	minutesfirstplayer=0;
+	secondsfirstplayer=0;
+	gameRunning=false;
+	}
+	String s4 = String.valueOf(minutesfirstplayer);
+	String s3 = String.valueOf(secondsfirstplayer); 
 
-				labeltimerplayer1.setText(s4+":"+s3);
-			}
+	labeltimerplayer1.setText(s4+":"+s3);
+	}
+	if (e.getSource().equals(time2)){
+	secondssecondplayer--;
+	if (secondssecondplayer==0 && minutesecondplayer>=0){
+	minutesecondplayer--;
+	secondssecondplayer=59;
+	
+	}
+	 if (minutesecondplayer<0) {
+	
+	minutesecondplayer=0;
+	secondssecondplayer=0;
+	gameRunning=false;
+	}
+	String s4 = String.valueOf(minutesecondplayer);
+	String s3 = String.valueOf(secondssecondplayer); 
 
-			if (e.getSource().equals(time2)){
-				secondssecondplayer--;
-				if (secondssecondplayer==0 && minutesecondplayer>=0){
-					minutesecondplayer--;
-					secondssecondplayer=59;
-				}
-				 if (minutesecondplayer<0) {
-					 
-					 //aqui podemos poner que cree un Frame que diga que el otro jugador gan�
-					minutesecondplayer=0;
-					secondssecondplayer=0;
-					gameRunning=false;
-				}
-				String s4 = String.valueOf(minutesecondplayer);
-				String s3 = String.valueOf(secondssecondplayer); 
+	labeltimerplayer2.setText(s4+":"+s3);
+	}
 
-				labeltimerplayer2.setText(s4+":"+s3);
-			}
-
-		}  // end game is running 
-			
-			else {
-				// don't count anymore 	`
-				time2.stop();
-				time.stop();
-			}
-		}   
+	}  // end game is running 
+	
+	else {
+	// don't count anymore 	`
+	time2.stop();
+	time.stop();
+	}
+	}   
 
 	}//end of class timer
 	
 	public class Timerindexchecker implements ActionListener{
 
 
-		public void actionPerformed(ActionEvent e) {
-			int currentindex;
-			IntroCheckers.client.checkplayer();
-			boolean done =false;
-			
-			for (int i=0; i<=799999999 ; i++){
-				if (i==799999998){
-					done = true;
-				}
-			}
-				if (done){
-				 currentindex= IntroCheckers.client.getIndex();
-					
-				 if (myindex < currentindex){
-						indextimer.stop();	
-						bothready = true; 
-						time.start();
-					}
-				 
-				}
-			
-		
-			
-			
-		
-		}
-		
-		
+	public void actionPerformed(ActionEvent e) {
+	int currentindex;
+	IntroCheckers.client.checkplayer();
+	boolean done =false;
 	
+	for (int i=0; i<=799999999 ; i++){
+	if (i==799999998){
+	done = true;
 	}
+	}
+	if (done){
+	 currentindex= IntroCheckers.client.getIndex();
 	
-		
-	
-	
-}
+	 if (myindex < currentindex){
+	indextimer.stop();	
+	bothready = true; 
+	time.start();
+	}
+	 
+	}
+
+	}
+	}  //end of class timerindecchecker
+}// end of class checkerBoard 
