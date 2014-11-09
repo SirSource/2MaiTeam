@@ -16,14 +16,11 @@ public class Client {
 	static int i;
 	static BufferedReader res=null;
 	static PrintStream req=null;
-	//static String msgToRecieve = res.readLine();
-
 	private static String msgToDecode;
-	private static String m;
-	private static int y1,x1,y2,x2;
-	public int index1=2 ;
-	public static int fudge;
-	private static boolean index = false;
+	private static String serverMessage;
+	private static int fromRow,fromCol,toRow,toCol;
+	public int indexplayer=2 ;
+	private static boolean lookingForPlayer = false;
 	public Client () throws UnknownHostException, IOException{
 		s = new Socket("localhost", 7654);
 		try {
@@ -56,27 +53,23 @@ public class Client {
 					// aqui es donde llega el mensaje del server
 
 			
-					 m = res.readLine();
+					 serverMessage = res.readLine();
 		
-					 
-					 
-					 if (index){
-							System.out.println("Server response"+ m);
-							index1 = Integer.parseInt(m);
-							setIndex(Integer.parseInt(m));
-							
-					
-						 System.out.println("client index " + index1 );
+					 if (lookingForPlayer){
+							System.out.println("Server response"+ serverMessage);
+							indexplayer = Integer.parseInt(serverMessage);
+							setIndex(Integer.parseInt(serverMessage));
 					
 					 }
+					 
 					 else {
-					 y1 = Integer.parseInt(m.substring(0, 1));
-					 x1 = Integer.parseInt(m.substring(1, 2));
-					 y2 = Integer.parseInt(m.substring(2, 3));
-					 x2 = Integer.parseInt(m.substring(3, 4));
-					fetchMove(y1, x1, y2, x2);
+					 fromRow = Integer.parseInt(serverMessage.substring(0, 1));
+					 fromCol = Integer.parseInt(serverMessage.substring(1, 2));
+					 toRow = Integer.parseInt(serverMessage.substring(2, 3));
+					 toCol = Integer.parseInt(serverMessage.substring(3, 4));
+					fetchMove(fromRow, fromCol, toRow, toCol);
 					}
-					 index =false;
+					 lookingForPlayer =false;
 
 				}
 			
@@ -90,13 +83,15 @@ public class Client {
 	
 	
 	public int getIndex( ){
-		System.out.println("get index index1 "+ index1);
-		return index1;
+	
+		return indexplayer;
 		
 	}
+	
 	public void setIndex(int i ){
-		index1 = i;
+		indexplayer = i;
 	}
+	
 	public static void sendMove(int a, int b, int c, int d) throws UnknownHostException, IOException{
 
 
@@ -108,17 +103,23 @@ public class Client {
 	
 	public static void checkplayer(){
 		req.println("indexofplayer");
-		index = true;
+		lookingForPlayer = true;
 		
+		
+	}
+	
+	public static void checkClosed(){
+		req.println("GotDisconnected");
 	}
 
 
 
-	public static void fetchMove(int y1, int x1, int y2, int x2 ) throws IOException{
+	public static void fetchMove(int fromRow, int fromCol, int toRow, int toCol ) throws IOException{
 
-			IntroCheckers.checkerboard.moveGUI(y1, x1, y2, x2);
+			IntroCheckers.checkerboard.moveGUI(fromRow, fromCol, toRow, toCol);
 			
 
 	}
+	
 	
 }

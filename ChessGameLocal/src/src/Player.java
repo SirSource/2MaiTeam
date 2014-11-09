@@ -29,10 +29,10 @@ public class Player {
 	
 	public void respond(String r) throws IOException
 	{
-		System.out.println(r + "entro a player respond");
+		
 		res.println(r);
 	}
-	
+
 	
 	public void  getPlayer(int index){
 	

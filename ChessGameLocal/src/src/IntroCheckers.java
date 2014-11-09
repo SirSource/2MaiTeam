@@ -17,6 +17,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.JButton;
 
@@ -28,7 +30,7 @@ import java.io.*;
 import java.net.UnknownHostException;
 
 import javax.swing.JComboBox;
-//hello my friend
+
 public class IntroCheckers extends JPanel implements ActionListener {
 	private JTextField textName;
 	private AudioPlayer bjMusic;
@@ -121,7 +123,7 @@ public static Client client;
 				int panelWidth=1075, panelHeight=672;
 
 				JFrame instruction = new JFrame();
-				instruction.setSize(panelWidth, panelHeight);
+				instruction.setSize(538, 860);
 				instruction.setResizable(false);
 				instruction.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				instruction.getContentPane().add(new Instructions());
@@ -196,7 +198,62 @@ public static Client client;
 		bjMusic.stop(); 
 		chessboard.setSize(panelWidth, panelHeight);
 		chessboard.setResizable(false);
-		chessboard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+     chessboard.addWindowListener(new WindowListener () {
+	
+	
+	
+	@Override
+	public void windowClosing(WindowEvent e) {
+		// TODO Auto-generated method stub
+		JFrame youLose = new JFrame();
+		youLose.setSize(860, 538);
+		youLose.setResizable(false);
+		youLose.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		youLose.add(new Winner("not you"));
+		youLose.setVisible(true);
+		
+	}
+	
+	@Override
+	public void windowClosed(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+});
+		
+		chessboard.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		chessboard.getContentPane().add(checkerboard);
 		chessboard.setVisible(true);
 		new IntroCheckersCaller().disposeIntro();
@@ -216,9 +273,8 @@ public static Client client;
 		
 		checkerboard.myturn();
 		
-		
-		
-		
 	}
+	
+	
 
 }

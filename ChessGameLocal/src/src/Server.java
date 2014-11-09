@@ -5,15 +5,13 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 /**
- * 
- * @author gustavomarrero
- *
+ * This 
  */
 
 public class Server 
 {
 	private ServerSocket s;
-	private Player p[]=new Player[10];
+	private  Player p[]=new Player[10];
 	private static int num=-1;
 	//public static int quePlayer;
 	
@@ -46,6 +44,7 @@ public class Server
 				try {
 					s.setSoTimeout(100);
 					c = s.accept(); //Accepts the connection
+					
 					p[++num]= new Player(c); //Creates a new player
 					//quePlayer = 1 + quePlayer;
 					System.out.println("player "+(num+1)+" entereded");
@@ -54,7 +53,7 @@ public class Server
 				{
 					for (int i=0; i<=num; i++)
 					{
-						if (p[i].ready())
+						if (p[i].ready() )
 						{
 					// Receives the message from client
 							String MESSAGE = p[i].request();

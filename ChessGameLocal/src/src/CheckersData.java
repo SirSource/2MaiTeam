@@ -54,17 +54,6 @@ public String toString(){
  * @return The element in that position in the board
  */
 public int thereIs(int Row, int Col){
-	// (comentario para mi mismo)  este metodo lo vamos voy a usar para cuando el usuario haga el primer click
-	//si realmente apreto una de sus fichas  pues que registre la localizacion del click 
-	// Y tambien lo voy a usar si en el segundo click esta vacio y si es legal la movida pues que la registre 
-	//como segundo click. Y hacer el metodo moveTo 
-	
-	//Una excepcion es si el usuario hace  un click de una movida que es candidato a jump verificar si se puede comer 
-	// Si es cierto, registarlo como segundo click.  Y hacer el metodo moveTo 
-	
-	// Otra excepcion es si el usuario apreta otra de sus mismas fichas pues registrar ese click como si
-	//fuera su primer click 
-	//WORKING
 
 	return board[Row][Col];
 	
